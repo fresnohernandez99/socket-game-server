@@ -15,5 +15,3 @@ pluginManagement {
 }
 
 rootProject.name = "GameServer"
-
-include(":data")

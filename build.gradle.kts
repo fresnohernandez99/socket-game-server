@@ -1,6 +1,5 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -27,6 +26,10 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
+                api(compose.materialIconsExtended)
                 implementation("io.socket:socket.io-server:4.0.1")
                 implementation("io.socket:engine.io-server:6.1.0")
                 implementation("javax.servlet:javax.servlet-api:4.0.1")
@@ -40,7 +43,11 @@ compose.desktop {
     application {
         mainClass = "MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(
+                TargetFormat.Dmg,
+                TargetFormat.Msi,
+                TargetFormat.Deb
+            )
             packageName = "GameServer"
             packageVersion = "1.0.0"
         }
