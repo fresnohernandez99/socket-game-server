@@ -1,4 +1,4 @@
-package model.hero.effects
+package model.effect
 
 abstract class AbstractEffect {
     abstract val id: String

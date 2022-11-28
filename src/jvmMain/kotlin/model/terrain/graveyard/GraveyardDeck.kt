@@ -1,7 +1,7 @@
 package model.terrain.graveyard
 
-import model.terrain.Abstract
+import model.terrain.AbstractDeck
 
 class GraveyardDeck(
     override val name: String = "graveyard-deck"
-) : Abstract()
+) : AbstractDeck()

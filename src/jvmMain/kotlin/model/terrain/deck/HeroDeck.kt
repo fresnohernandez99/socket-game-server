@@ -1,7 +1,7 @@
 package model.terrain.deck
 
-import model.terrain.Abstract
+import model.terrain.AbstractDeck
 
 class HeroDeck(
     override val name: String = "hero-deck"
-) : Abstract()
+) : AbstractDeck()

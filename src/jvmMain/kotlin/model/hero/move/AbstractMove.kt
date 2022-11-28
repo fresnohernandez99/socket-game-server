@@ -1,4 +1,4 @@
-package model.hero.moves
+package model.hero.move
 
 abstract class AbstractMove {
     abstract val id: String

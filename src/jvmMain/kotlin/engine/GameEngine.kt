@@ -1,6 +1,6 @@
 package engine
 
-import model.player.IPlayer
+import model.player.AbstractPlayer
 import model.terrain.Terrain
 import model.terrain.deck.HeroDeck
 import model.terrain.hand.HandDeck
@@ -29,7 +29,7 @@ class GameEngine {
      * Receive all data from players
      */
 
-    fun initBattle(playersList: ArrayList<IPlayer>, playerHeroDecks: ArrayList<HeroDeck>): Terrain {
+    fun initBattle(playersList: ArrayList<AbstractPlayer>, playerHeroDecks: ArrayList<HeroDeck>): Terrain {
         return terrain.apply {
             val playerHeroHandDecks: ArrayList<HandDeck> = generateHands(playerHeroDecks)
 
@@ -79,7 +79,9 @@ class GameEngine {
      * Receive all players actions
      */
 
-    fun initRound() {}
+    fun initRound() {
+
+    }
 
     /**
      * Calculate round

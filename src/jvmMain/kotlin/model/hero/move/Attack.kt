@@ -1,4 +1,4 @@
-package model.hero.moves
+package model.hero.move
 
 open class Attack(
     override val id: String,

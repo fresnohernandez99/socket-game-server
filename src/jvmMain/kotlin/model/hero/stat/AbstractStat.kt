@@ -1,4 +1,4 @@
-package model.hero.stats
+package model.hero.stat
 
 abstract class AbstractStat {
     abstract val name: String

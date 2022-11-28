@@ -1,4 +1,4 @@
-package model.hero.moves.boosts
+package model.hero.move.boosts
 
 abstract class AbstractBoost {
     abstract val attrToBoost: String

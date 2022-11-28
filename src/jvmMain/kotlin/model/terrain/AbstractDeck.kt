@@ -1,6 +1,6 @@
 package model.terrain
 
-abstract class Abstract {
+abstract class AbstractDeck {
     abstract val name: String
     open val items: ArrayList<AbstractPiece> = ArrayList()
 

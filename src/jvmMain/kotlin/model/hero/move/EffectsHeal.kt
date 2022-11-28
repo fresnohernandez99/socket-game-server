@@ -1,9 +1,10 @@
-package model.hero.moves
+package model.hero.move
 
-class IntervalHeal(
+import model.effect.EffectType
+
+class EffectsHeal(
     override val id: String,
     override val name: String,
     override val times: Int,
-    val restoredPoints: Boolean,
-    val turns: Int
+    val effectTarget: EffectType
 ) : AbstractMove()

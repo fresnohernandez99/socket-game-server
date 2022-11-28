@@ -1,6 +1,6 @@
 package model.hero.classes
 
-import model.hero.stats.AbstractStat
+import model.hero.stat.AbstractStat
 
 abstract class AbstractClass {
     abstract val name: String

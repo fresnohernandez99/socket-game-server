@@ -1,7 +1,7 @@
-package model.hero.items
+package model.item
 
-import model.hero.moves.boosts.AbstractBoost
-import model.hero.effects.AbstractEffect
+import model.hero.move.boosts.AbstractBoost
+import model.effect.AbstractEffect
 
 abstract class AbstractItem {
     abstract val id: String

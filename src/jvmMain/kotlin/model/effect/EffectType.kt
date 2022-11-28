@@ -1,4 +1,4 @@
-package model.hero.effects
+package model.effect
 
 enum class EffectType {
     VENOM,

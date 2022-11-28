@@ -1,4 +1,4 @@
-package model.hero.moves.boosts
+package model.hero.move.boosts
 
 class NegativeBoost(
     override var attrToBoost: String,

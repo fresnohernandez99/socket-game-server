@@ -1,4 +1,4 @@
-package model.hero.moves
+package model.hero.move
 
 class FieldModifier(
     override val id: String,
