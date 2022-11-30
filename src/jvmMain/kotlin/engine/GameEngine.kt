@@ -1,6 +1,9 @@
 package engine
 
+import model.action.Action
+import model.action.ActionType.*
 import model.player.AbstractPlayer
+import model.result.ActionToke
 import model.terrain.Terrain
 import model.terrain.deck.HeroDeck
 import model.terrain.hand.HandDeck
@@ -17,7 +20,10 @@ class GameEngine {
         configuration: SpaceConfiguration,
         initRules: ArrayList<AbstractRule> = ArrayList(),
     ) {
-        terrain = Terrain(Space(configuration), initRules)
+        terrain = Terrain(
+            space = Space(configuration),
+            rules = initRules
+        )
     }
 
     fun sendConfigurations(): Terrain {
@@ -79,7 +85,38 @@ class GameEngine {
      * Receive all players actions
      */
 
-    fun initRound() {
+    fun initRound(actions: ArrayList<Action>) {
+        actions.forEach {
+            when (it.actionType) {
+                SET_PIECE -> setPiece(it)
+                PIECE_TARGET -> actionOverPiece(it)
+                PLAYER_TARGET -> {}
+                DECK_TARGET -> {}
+                NO_TARGET -> {}
+                PASS -> {}
+                RUN -> {}
+                PLAYER_ITEM -> {}
+                PIECE_ITEM -> {}
+                FIELD_ITEM -> {}
+            }
+        }
+    }
+
+    private fun setPiece(action: Action): ActionToke {
+        // TODO CHECK FIELD SIZE
+        // TODO CHECK LIMIT IN FIELD
+
+        action.piece!!.playerId = action.playerId
+
+        // TODO CHECK NO ONE ON SETTING POSITION
+
+        terrain.spaceGrid.position.add(action.piece)
+
+        return ActionToke.fromAction(action)
+    }
+
+    private fun actionOverPiece(action: Action) {
+        // find target piece on terrain
 
     }
 

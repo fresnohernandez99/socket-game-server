@@ -8,6 +8,9 @@ import model.hero.stat.AbstractStat
 import model.terrain.AbstractPiece
 
 class Hero(
+    override var playerId: String? = null,
+    override var position: Int? = null,
+    val heroId: String,
     val lifePoints: Int,
     val level: Int,
     val charClass: AbstractClass,

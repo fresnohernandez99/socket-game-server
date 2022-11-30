@@ -1,14 +1,32 @@
 package model.action
 
-import model.hero.Hero
+import model.deckAction.DeckAction
+import model.effect.AbstractEffect
 import model.hero.move.AbstractMove
-import model.player.AbstractPlayer
-import model.terrain.AbstractDeck
+import model.hero.move.boosts.AbstractBoost
+import model.terrain.AbstractPiece
 
-class Action (
+class Action(
+    val playerId: String,
     val actionType: ActionType,
-    val heroTarget: Hero? = null,
-    val playerTarget: AbstractPlayer? = null,
-    val deckTarget: AbstractDeck? = null,
-    val move: AbstractMove? = null
+
+    // PLAYER_TARGET
+    val playerIdTarget: String? = null,
+
+    val playerTarget_Effect_Toke: AbstractEffect? = null,
+    val playerTarget_Boost_Toke: AbstractBoost? = null,
+
+    // HERO_TARGET
+    val heroIdTarget: String? = null,
+
+    val move: AbstractMove? = null,
+    val pieceTarget_Effect_Toke: AbstractEffect? = null,
+    val pieceTarget_Boost_Toke: AbstractBoost? = null,
+
+    // SET_PIECE
+    val piece: AbstractPiece? = null,
+
+    // DECK_TARGET
+    val deckAction: DeckAction? = null
+
 )
