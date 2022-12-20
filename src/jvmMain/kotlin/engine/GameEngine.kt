@@ -5,8 +5,8 @@ import model.action.ActionType.*
 import model.player.AbstractPlayer
 import model.result.ActionToke
 import model.terrain.Terrain
-import model.terrain.deck.HeroDeck
-import model.terrain.hand.HandDeck
+import model.deck.HeroDeck
+import model.deck.HandDeck
 import model.terrain.rules.AbstractRule
 import model.terrain.space.PlayersState
 import model.terrain.space.Space
@@ -112,7 +112,7 @@ class GameEngine {
      * Se guarda cada uno de los resultados de las acciones
      * Se devuelve un arreglo de resultados para cada jugador
      */
-    private fun applyActions(actions: ArrayList<Action>) {
+    private fun applyActions(actions: ArrayList<Action>): ArrayList<ActionToke> {
         val playerActionsResults = ArrayList<ActionToke>()
 
         actions.forEach {
@@ -120,8 +120,8 @@ class GameEngine {
                 when (it.actionType) {
                     SET_PIECE -> setPiece(it)
                     PIECE_TARGET -> actionOverPiece(it)
-                    PLAYER_TARGET -> {}
-                    DECK_TARGET -> {}
+                    PLAYER_TARGET -> actionOverPlayer(it)
+                    DECK_TARGET -> actionOverDeck()
                     NO_TARGET -> {}
                     PASS -> {}
                     RUN -> {}
@@ -155,6 +155,17 @@ class GameEngine {
         return piece?.applyAction(action) ?: ActionToke.fromAction(action).apply {
             wasError = true
         }
+    }
+
+    private fun actionOverPlayer(action: Action): ActionToke {
+        val playerTarget = terrain.playersList.find { it.playerId == action.playerTargetId }
+        return playerTarget?.applyAction(action) ?: ActionToke.fromAction(action).apply {
+            wasError = true
+        }
+    }
+
+    private fun actionOverDeck(action: Action): ActionToke {
+
     }
 
     /**

@@ -3,7 +3,6 @@ package model.result
 import model.action.Action
 import model.action.ActionType
 import model.deckAction.DeckAction
-import model.effect.AbstractEffect
 import model.hero.move.AbstractMove
 import model.hero.move.boosts.AbstractBoost
 import model.terrain.AbstractPiece
@@ -16,7 +15,6 @@ class ActionToke(
     // region PLAYER_TARGET
     val playerTargetId: String? = null,
 
-    val playerTarget_Effect_Toke: AbstractEffect? = null,
     val playerTarget_Boost_Toke: AbstractBoost? = null,
     // endregion PLAYER_TARGET
 
@@ -28,7 +26,6 @@ class ActionToke(
     val pieceIdTarget: String? = null,
 
     val move: AbstractMove? = null,
-    val pieceTarget_Effect_Toke: AbstractEffect? = null,
     val pieceTarget_Boost_Toke: AbstractBoost? = null,
     // endregion PIECE_TARGET
 
@@ -45,11 +42,9 @@ class ActionToke(
                 playerId = action.playerId,
                 actionType = action.actionType,
                 playerTargetId = action.playerTargetId,
-                playerTarget_Effect_Toke = action.playerTarget_Effect_Toke,
                 playerTarget_Boost_Toke = action.playerTarget_Boost_Toke,
                 pieceIdTarget = action.pieceTargetId,
                 move = action.move,
-                pieceTarget_Effect_Toke = action.pieceTarget_Effect_Toke,
                 pieceTarget_Boost_Toke = action.pieceTarget_Boost_Toke,
                 piece = action.piece,
                 deckAction = action.deckAction,

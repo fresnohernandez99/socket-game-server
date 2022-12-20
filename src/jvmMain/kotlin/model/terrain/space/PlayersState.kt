@@ -1,9 +1,9 @@
 package model.terrain.space
 
 import model.player.AbstractPlayer
-import model.terrain.deck.HeroDeck
-import model.terrain.graveyard.GraveyardDeck
-import model.terrain.hand.HandDeck
+import model.deck.HeroDeck
+import model.deck.GraveyardDeck
+import model.deck.HandDeck
 
 class PlayersState(
     val playerHeroDecks: ArrayList<HeroDeck>,

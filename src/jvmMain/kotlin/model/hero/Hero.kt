@@ -1,7 +1,6 @@
 package model.hero
 
 import model.action.Action
-import model.effect.AbstractEffect
 import model.hero.armor.AbstractArmor
 import model.hero.classes.AbstractClass
 import model.hero.move.AttackMove
@@ -24,7 +23,6 @@ class Hero(
     val level: Int,
     val charClass: AbstractClass,
     var boosts: ArrayList<AbstractBoost>,
-    var effects: ArrayList<AbstractEffect>,
 
     /**
      * Stats order in array:
@@ -74,7 +72,8 @@ class Hero(
 
             // Aplico un movimiento de curación. Se define como restar a lifePointsLose si este es > 0
             if (move is HealMove) {
-                if (lifePointsLose > 0) lifePointsLose -= move.restoredPoints
+                if (lifePointsLose < move.restoredPoints) lifePointsLose = 0
+                else if (lifePointsLose > 0) lifePointsLose -= move.restoredPoints
             }
         }
 

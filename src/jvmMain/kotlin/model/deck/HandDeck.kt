@@ -1,4 +1,4 @@
-package model.terrain.hand
+package model.deck
 
 import model.terrain.AbstractDeck
 

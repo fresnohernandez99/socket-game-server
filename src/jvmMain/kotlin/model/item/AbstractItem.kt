@@ -1,7 +1,6 @@
 package model.item
 
 import model.hero.move.boosts.AbstractBoost
-import model.effect.AbstractEffect
 
 abstract class AbstractItem {
     abstract val id: String

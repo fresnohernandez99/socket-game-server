@@ -1,4 +1,4 @@
-package model.terrain.graveyard
+package model.deck
 
 import model.terrain.AbstractDeck
 
