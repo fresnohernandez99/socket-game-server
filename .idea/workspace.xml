@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ba6f51a-c39e-4ce6-b42f-1ef53d344bf1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Defense.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/Attack.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AttackMove.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/Defence.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/DefenseMove.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/EffectsHeal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/HealMove.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHeal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHealMode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/IntervalHeal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/effect/IntervalHeal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/AbstractStat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/AbstractStat.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Evasion.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Evasion.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Intellect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Intellect.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Magic.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Magic.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Speed.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Speed.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Strength.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Strength.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,10 +68,13 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="model.effect" />
+      <recent name="model.result" />
       <recent name="model.terrain" />
       <recent name="model.hero" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="model.hero.move" />
       <recent name="model.hero.stat" />
       <recent name="model.terrain.graveyard" />
       <recent name="model.terrain.hand" />

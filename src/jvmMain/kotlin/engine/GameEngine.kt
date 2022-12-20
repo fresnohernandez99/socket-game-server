@@ -16,16 +16,27 @@ class GameEngine {
 
     private lateinit var terrain: Terrain
 
+    /**
+     * Iniciado por el servidor una única vez por tipo de juego.
+     * Objeto global.
+     */
     fun initConfiguration(
         configuration: SpaceConfiguration,
         initRules: ArrayList<AbstractRule> = ArrayList(),
-    ) {
-        terrain = Terrain(
-            space = Space(configuration),
-            rules = initRules
-        )
+    ): Terrain {
+        if (!this::terrain.isInitialized)
+            terrain = Terrain(
+                space = Space(configuration),
+                rules = initRules
+            )
+        return terrain
     }
 
+    /**
+     * Método por partida.
+     * Devuelve el formato de juego.
+     * Usado para actualizar el estado inicial de los clientes.
+     */
     fun sendConfigurations(): Terrain {
         return terrain
     }
@@ -33,8 +44,8 @@ class GameEngine {
     /**
      * Battle
      * Receive all data from players
+     * Se activa al tener todos los players listos. (SOCKET)
      */
-
     fun initBattle(playersList: ArrayList<AbstractPlayer>, playerHeroDecks: ArrayList<HeroDeck>): Terrain {
         return terrain.apply {
             val playerHeroHandDecks: ArrayList<HandDeck> = generateHands(playerHeroDecks)
@@ -51,6 +62,10 @@ class GameEngine {
         }
     }
 
+    /**
+     * Luego de iniciado el combate.
+     * Primera acción recibida por los clientes. (SOCKET)
+     */
     private fun generateHands(playerHeroDecks: ArrayList<HeroDeck>): ArrayList<HandDeck> {
         val spaceConfig = terrain.space.configuration
 
@@ -83,25 +98,45 @@ class GameEngine {
     /**
      * Init round
      * Receive all players actions
+     * La posicion del arreglo recibido dice de que player es la acción. (MANEJAR ORDEN EN EL SOCKET)
+     * En cada ronda al terminar de recibir las acciones.(SOCKET-MOTOR)
      */
-
-    fun initRound(actions: ArrayList<Action>) {
-        actions.forEach {
-            when (it.actionType) {
-                SET_PIECE -> setPiece(it)
-                PIECE_TARGET -> actionOverPiece(it)
-                PLAYER_TARGET -> {}
-                DECK_TARGET -> {}
-                NO_TARGET -> {}
-                PASS -> {}
-                RUN -> {}
-                PLAYER_ITEM -> {}
-                PIECE_ITEM -> {}
-                FIELD_ITEM -> {}
-            }
+    fun receivePlayerActionsAndRun(playerActions: ArrayList<ArrayList<Action>>) {
+        playerActions.forEach {
+            applyActions(it)
         }
     }
 
+    /**
+     * Aplica cada accion recibida de cada jugador
+     * Se guarda cada uno de los resultados de las acciones
+     * Se devuelve un arreglo de resultados para cada jugador
+     */
+    private fun applyActions(actions: ArrayList<Action>) {
+        val playerActionsResults = ArrayList<ActionToke>()
+
+        actions.forEach {
+            playerActionsResults.add(
+                when (it.actionType) {
+                    SET_PIECE -> setPiece(it)
+                    PIECE_TARGET -> actionOverPiece(it)
+                    PLAYER_TARGET -> {}
+                    DECK_TARGET -> {}
+                    NO_TARGET -> {}
+                    PASS -> {}
+                    RUN -> {}
+                    PLAYER_ITEM -> {}
+                    PIECE_ITEM -> {}
+                    FIELD_ITEM -> {}
+                }
+            )
+        }
+        return playerActionsResults
+    }
+
+    /**
+     * Poner Piece en el grid del espacio
+     */
     private fun setPiece(action: Action): ActionToke {
         // TODO CHECK FIELD SIZE
         // TODO CHECK LIMIT IN FIELD
@@ -115,9 +150,11 @@ class GameEngine {
         return ActionToke.fromAction(action)
     }
 
-    private fun actionOverPiece(action: Action) {
-        // find target piece on terrain
-
+    private fun actionOverPiece(action: Action): ActionToke {
+        val piece = terrain.spaceGrid.position.find { it.id == action.pieceTargetId }
+        return piece?.applyAction(action) ?: ActionToke.fromAction(action).apply {
+            wasError = true
+        }
     }
 
     /**

@@ -1,4 +1,6 @@
-package model.hero.move
+package model.effect
+
+import model.hero.move.AbstractMove
 
 class IntervalHeal(
     override val id: String,

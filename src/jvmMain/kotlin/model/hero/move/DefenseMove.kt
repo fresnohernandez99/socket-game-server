@@ -1,10 +1,10 @@
 package model.hero.move
 
-class Defence(
+class DefenseMove(
     override val id: String,
     override val name: String,
     override val times: Int,
-    val damageTaken: Double,
+    var percent: Int,
     val specific: Boolean,
     val specificType: ArrayList<AttackType> = arrayListOf(AttackType.ALL)
 ) : AbstractMove()

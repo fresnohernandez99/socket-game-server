@@ -1,8 +1,8 @@
 package model.hero.move
 
-class InstantHeal(
+class HealMove(
     override val id: String,
     override val name: String,
     override val times: Int,
-    val restoredPoints: Boolean
+    val restoredPoints: Int
 ) : AbstractMove()

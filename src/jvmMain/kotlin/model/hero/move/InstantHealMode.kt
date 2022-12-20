@@ -1,10 +1,8 @@
 package model.hero.move
 
-import model.effect.EffectType
-
-class EffectsHeal(
+class InstantHealMode(
     override val id: String,
     override val name: String,
     override val times: Int,
-    val effectTarget: EffectType
+    val restoredPoints: Boolean
 ) : AbstractMove()
