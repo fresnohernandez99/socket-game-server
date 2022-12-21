@@ -90,12 +90,9 @@ class GameEngine {
                     SET_PIECE -> setPiece(it)
                     PIECE_TARGET -> actionOverPiece(it)
                     PLAYER_TARGET -> actionOverPlayer(it)
-                    NO_TARGET -> {}
-                    PASS -> {}
-                    RUN -> {}
-                    PLAYER_ITEM -> {}
-                    PIECE_ITEM -> {}
-                    FIELD_ITEM -> {}
+                    PASS -> actionPass(it)
+                    RUN -> actionRun(it)
+                    else -> actionPass(it)
                 }
             )
         }
@@ -130,6 +127,17 @@ class GameEngine {
         return playerTarget?.applyAction(action) ?: ActionToke.fromAction(action).apply {
             wasError = true
         }
+    }
+
+    private fun actionPass(action: Action): ActionToke {
+        return ActionToke.fromAction(action)
+    }
+
+    private fun actionRun(action: Action): ActionToke {
+        val playerTarget = terrain.playersList.find { it.playerId == action.playerId }
+        terrain.playersList.remove(playerTarget)
+
+        return ActionToke.fromAction(action)
     }
 
     /**
