@@ -1,4 +1,6 @@
-package model.terrain
+package model.deck
+
+import model.terrain.AbstractPiece
 
 abstract class AbstractDeck {
     abstract val name: String
@@ -11,7 +13,13 @@ abstract class AbstractDeck {
     }
 
     fun addItem(position: Int, piece: AbstractPiece): ArrayList<AbstractPiece> {
-        if (position < items.size) items.removeAt(position)
+        if (position < items.size) items.add(piece)
+        else items.add(piece)
+        return items
+    }
+
+    fun addItems(pieces: ArrayList<AbstractPiece>): ArrayList<AbstractPiece> {
+        items.addAll(pieces)
         return items
     }
 
@@ -35,4 +43,16 @@ abstract class AbstractDeck {
     }
 
     fun shuffle() = items.shuffle()
+
+    fun getAmountOfPieces(amount: Int): ArrayList<AbstractPiece> {
+        val extracted = ArrayList<AbstractPiece>()
+        try {
+            for (i in 0 until amount) {
+                extracted.add(items[0])
+                items.removeAt(0)
+            }
+        } catch (e: Exception) {
+        }
+        return extracted
+    }
 }

@@ -5,25 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ba6f51a-c39e-4ce6-b42f-1ef53d344bf1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Defense.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/PieceDeck.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/Attack.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AttackMove.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/Defence.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/DefenseMove.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/EffectsHeal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/HealMove.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHeal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHealMode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/IntervalHeal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/effect/IntervalHeal.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/AbstractStat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/AbstractStat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Evasion.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Evasion.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Intellect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Intellect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Magic.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Magic.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Speed.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Speed.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Strength.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Strength.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/ActionType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/ActionType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/GraveyardDeck.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/GraveyardDeck.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/HandDeck.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/HandDeck.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/HeroDeck.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deckAction/DeckAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deckAction/DeckAction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/AbstractPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/AbstractPlayer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractDeck.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/AbstractDeck.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/space/PlayersState.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/space/Space.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/space/Space.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/space/SpaceConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/space/SpaceConfiguration.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +44,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.sdkman/candidates/java/11.0.11.hs-adpt/lib/src.zip!/java.base/java/util/ArrayList.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="xq6b0wpl" />
   </component>
@@ -68,6 +68,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="model.deck" />
       <recent name="model.effect" />
       <recent name="model.result" />
       <recent name="model.terrain" />

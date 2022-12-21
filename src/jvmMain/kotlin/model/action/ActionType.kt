@@ -4,7 +4,6 @@ enum class ActionType {
     SET_PIECE,
     PIECE_TARGET,
     PLAYER_TARGET,
-    DECK_TARGET,
     NO_TARGET,
     PASS,
     RUN,

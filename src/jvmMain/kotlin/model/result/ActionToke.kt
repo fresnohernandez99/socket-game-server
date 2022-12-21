@@ -33,6 +33,7 @@ class ActionToke(
     val piece: AbstractPiece? = null,
 
     // DECK_TARGET
+    // Debe tener un player target
     val deckAction: DeckAction? = null,
 
 ) {

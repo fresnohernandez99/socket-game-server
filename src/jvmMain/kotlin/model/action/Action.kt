@@ -13,6 +13,8 @@ class Action(
     val playerTargetId: String? = null,
 
     val playerTarget_Boost_Toke: AbstractBoost? = null,
+
+    val deckAction: DeckAction? = null,
     // endregion PLAYER_TARGET
 
     // region PIECE_TARGET
@@ -27,8 +29,5 @@ class Action(
 
     // SET_PIECE
     val piece: AbstractPiece? = null,
-
-    // DECK_TARGET
-    val deckAction: DeckAction? = null,
 
 )

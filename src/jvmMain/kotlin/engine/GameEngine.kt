@@ -5,10 +5,7 @@ import model.action.ActionType.*
 import model.player.AbstractPlayer
 import model.result.ActionToke
 import model.terrain.Terrain
-import model.deck.HeroDeck
-import model.deck.HandDeck
 import model.terrain.rules.AbstractRule
-import model.terrain.space.PlayersState
 import model.terrain.space.Space
 import model.terrain.space.SpaceConfiguration
 
@@ -46,19 +43,16 @@ class GameEngine {
      * Receive all data from players
      * Se activa al tener todos los players listos. (SOCKET)
      */
-    fun initBattle(playersList: ArrayList<AbstractPlayer>, playerHeroDecks: ArrayList<HeroDeck>): Terrain {
+    fun initBattle(playersList: ArrayList<AbstractPlayer>): Terrain {
         return terrain.apply {
-            val playerHeroHandDecks: ArrayList<HandDeck> = generateHands(playerHeroDecks)
-
             this.playersList = playersList
-            this.space.setState(
-                PlayersState(
-                    playerHeroDecks = playerHeroDecks,
-                    playersInfo = playersList,
-                    playerHeroHandDecks = playerHeroHandDecks,
-                    playerHeroGraveyardDecks = ArrayList()
-                )
-            )
+
+            if (this.space.configuration.generateRandomHands) {
+                this.playersList.forEach {
+                    // TODO generate random hands
+                }
+            }
+
         }
     }
 
@@ -66,33 +60,8 @@ class GameEngine {
      * Luego de iniciado el combate.
      * Primera acción recibida por los clientes. (SOCKET)
      */
-    private fun generateHands(playerHeroDecks: ArrayList<HeroDeck>): ArrayList<HandDeck> {
-        val spaceConfig = terrain.space.configuration
+    private fun generateHands(players: ArrayList<AbstractPlayer>) {
 
-        val playerHeroHandDecks = ArrayList<HandDeck>()
-
-        playerHeroDecks.forEachIndexed { index, heroDeck ->
-            var cont = 0
-
-            if (spaceConfig.limitInHand == -1) {
-                playerHeroHandDecks.add(index, HandDeck().apply {
-                    setNewItems(heroDeck.items)
-                })
-            } else {
-                val handDeck = HandDeck()
-                while (cont < heroDeck.items.size && cont < spaceConfig.limitInHand) {
-                    handDeck.addItem(cont, heroDeck.items[cont])
-
-                    // remove from actual deck
-                    heroDeck.items.removeAt(cont)
-
-                    cont++
-                }
-                playerHeroHandDecks.add(cont, handDeck)
-            }
-        }
-
-        return playerHeroHandDecks
     }
 
     /**
@@ -121,7 +90,6 @@ class GameEngine {
                     SET_PIECE -> setPiece(it)
                     PIECE_TARGET -> actionOverPiece(it)
                     PLAYER_TARGET -> actionOverPlayer(it)
-                    DECK_TARGET -> actionOverDeck()
                     NO_TARGET -> {}
                     PASS -> {}
                     RUN -> {}
@@ -162,10 +130,6 @@ class GameEngine {
         return playerTarget?.applyAction(action) ?: ActionToke.fromAction(action).apply {
             wasError = true
         }
-    }
-
-    private fun actionOverDeck(action: Action): ActionToke {
-
     }
 
     /**

@@ -13,5 +13,6 @@ class SpaceConfiguration(
     var maxTurns: Int = -1,
     var minPlayers: Int = 2,
     var fieldSize: Int = -1,
-    var defeatCause: DefeatCause
+    var defeatCause: DefeatCause,
+    var generateRandomHands: Boolean = false
 )

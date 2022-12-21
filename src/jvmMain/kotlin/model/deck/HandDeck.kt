@@ -1,7 +1,9 @@
 package model.deck
 
-import model.terrain.AbstractDeck
-
 class HandDeck(
-    override val name: String = "hand-deck"
-) : AbstractDeck()
+    override val name: String = DECK_NAME
+) : AbstractDeck() {
+    companion object {
+        const val DECK_NAME = "hand-deck"
+    }
+}

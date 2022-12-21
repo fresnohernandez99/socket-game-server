@@ -1,11 +1,13 @@
 package model.deckAction
 
+import model.deck.GraveyardDeck
+import model.deck.HandDeck
+
 class DeckAction(
     val cardNumberToAffect: Int,
 
-    val deckTargetNameFromPop: String? = null,
-    val deckTargetNameToPop: String? = null,
+    val deckTargetNameFromPop: String = HandDeck.DECK_NAME,
+    val deckTargetNameToPop: String = GraveyardDeck.DECK_NAME,
 
-    val deckTargetNameFromPush: String? = null,
-    val deckTargetNameToPush: String? = null
+    val effectShuffle: Boolean = true
 )
