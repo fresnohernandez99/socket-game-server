@@ -25,9 +25,11 @@ class Action(
 
     val move: AbstractMove? = null,
     val pieceTarget_Boost_Toke: AbstractBoost? = null,
+
+    val moveToDeck: String? = null,
     // endregion PIECE_TARGET
 
     // SET_PIECE
     val piece: AbstractPiece? = null,
 
-)
+    )

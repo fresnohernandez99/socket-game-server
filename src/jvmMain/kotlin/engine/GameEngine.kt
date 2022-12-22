@@ -2,10 +2,16 @@ package engine
 
 import model.action.Action
 import model.action.ActionType.*
+import model.deck.GraveyardDeck
+import model.deck.HandDeck
+import model.deck.PieceDeck
+import model.hero.Hero
 import model.player.AbstractPlayer
 import model.result.ActionToke
+import model.result.RoundResult
 import model.terrain.Terrain
 import model.terrain.rules.AbstractRule
+import model.terrain.space.DefeatCause
 import model.terrain.space.Space
 import model.terrain.space.SpaceConfiguration
 
@@ -21,11 +27,9 @@ class GameEngine {
         configuration: SpaceConfiguration,
         initRules: ArrayList<AbstractRule> = ArrayList(),
     ): Terrain {
-        if (!this::terrain.isInitialized)
-            terrain = Terrain(
-                space = Space(configuration),
-                rules = initRules
-            )
+        if (!this::terrain.isInitialized) terrain = Terrain(
+            space = Space(configuration), rules = initRules
+        )
         return terrain
     }
 
@@ -70,10 +74,83 @@ class GameEngine {
      * La posicion del arreglo recibido dice de que player es la acción. (MANEJAR ORDEN EN EL SOCKET)
      * En cada ronda al terminar de recibir las acciones.(SOCKET-MOTOR)
      */
-    fun receivePlayerActionsAndRun(playerActions: ArrayList<ArrayList<Action>>) {
-        playerActions.forEach {
-            applyActions(it)
+    fun receivePlayerActionsAndRun(playerActions: ArrayList<Action>): RoundResult {
+        val actionsToke = ArrayList<ActionToke>()
+
+        actionsToke.addAll(applyActions(playerActions))
+
+        //mover piezas a deck correspondientes
+        terrain.spaceGrid.position.forEach { piece ->
+            if (piece is Hero) {
+                if (piece.lifePoints <= piece.lifePointsLose) {
+                    // conseguir player duenno del heroe
+                    // mover heroe al cementerio
+                    // informar de movimiento
+                    actionsToke.add(
+                        ActionToke(
+                            actionType = PIECE_TARGET,
+                            moveToDeck = GraveyardDeck.DECK_NAME,
+                            pieceIdTarget = piece.id,
+                            playerId = piece.playerId
+                        )
+                    )
+
+                    if (DefeatCause.SINGLE_PIECE_DEFEATED == terrain.space.configuration.defeatCause) {
+                        if (terrain.loserPlayers.find { it.playerId == piece.playerId } == null) {
+                            terrain.playersList.find { it.playerId == piece.playerId }?.let {
+                                terrain.loserPlayers.add(it)
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        when (terrain.space.configuration.defeatCause) {
+            DefeatCause.LIFE_POINTS -> {
+                terrain.playersList.forEach {
+                    if (it.lifePoints <= it.lifePointsLose) {
+                        terrain.loserPlayers.add(it)
+                    }
+                }
+            }
+
+            DefeatCause.NO_MORE_PIECES_ON_PIECE_DECK -> {
+                terrain.playersList.forEach {
+                    if (it.pieceDeck.amount() == 0) terrain.loserPlayers.add(it)
+                }
+            }
+
+            DefeatCause.NO_MORE_PIECES_ON_THE_FIELD -> {
+                val playersWithPiecesTemp = ArrayList<String>()
+
+                terrain.spaceGrid.position.forEach {
+                    playersWithPiecesTemp.add(it.playerId)
+                }
+
+                playersWithPiecesTemp.sort()
+
+                val playersWithPieces = ArrayList<String>()
+                var actualId = ""
+                playersWithPiecesTemp.forEach {
+                    if (actualId != it) {
+                        playersWithPieces.add(it)
+                        actualId = it
+                    }
+                }
+
+                terrain.playersList.forEach { player ->
+                    val exist = playersWithPieces.find { it == player.playerId }
+                    if (exist == null) terrain.loserPlayers.add(player)
+                }
+            }
+
+            else -> {}
+        }
+
+        return RoundResult(
+            playersReceive = actionsToke, loserPlayers = terrain.loserPlayers
+        )
     }
 
     /**
@@ -117,6 +194,21 @@ class GameEngine {
 
     private fun actionOverPiece(action: Action): ActionToke {
         val piece = terrain.spaceGrid.position.find { it.id == action.pieceTargetId }
+        val playerTarget = terrain.playersList.find { it.playerId == action.playerTargetId }
+
+        if (action.moveToDeck != null) {
+            val deckToMove = when (action.moveToDeck) {
+                PieceDeck.DECK_NAME -> playerTarget?.pieceDeck
+                HandDeck.DECK_NAME -> playerTarget?.handDeck
+                GraveyardDeck.DECK_NAME -> playerTarget?.graveyardDeck
+                else -> playerTarget?.handDeck
+            }
+
+            deckToMove?.addItem(0, piece)
+
+            return ActionToke.fromAction(action)
+        }
+
         return piece?.applyAction(action) ?: ActionToke.fromAction(action).apply {
             wasError = true
         }
@@ -139,18 +231,6 @@ class GameEngine {
 
         return ActionToke.fromAction(action)
     }
-
-    /**
-     * Calculate round
-     * Make effects to all actions
-     */
-
-    fun calculateRound() {}
-
-    /**
-     * Evaluate round
-     * Calculate defeat possibility
-     */
 
     fun evaluateRound() {}
 

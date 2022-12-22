@@ -30,9 +30,10 @@ kotlin {
                 api(compose.foundation)
                 api(compose.material)
                 api(compose.materialIconsExtended)
-                implementation("io.socket:socket.io-server:4.0.1")
-                implementation("io.socket:engine.io-server:6.1.0")
-                implementation("javax.servlet:javax.servlet-api:4.0.1")
+                implementation("javax.websocket:javax.websocket-api:1.1")
+                implementation("com.google.code.gson:gson:2.10")
+                implementation("org.glassfish.tyrus:tyrus-server:1.1")
+                implementation("org.glassfish.tyrus:tyrus-container-grizzly:1.1")
             }
         }
         val jvmTest by getting

@@ -9,5 +9,6 @@ class Terrain(
     val space: Space,
     var rules: ArrayList<AbstractRule>,
     var playersList: ArrayList<AbstractPlayer> = ArrayList(),
+    var loserPlayers: ArrayList<AbstractPlayer> = ArrayList(),
     val spaceGrid: SpaceGrid = SpaceGrid()
 )

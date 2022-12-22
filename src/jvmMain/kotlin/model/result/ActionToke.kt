@@ -27,6 +27,8 @@ class ActionToke(
 
     val move: AbstractMove? = null,
     val pieceTarget_Boost_Toke: AbstractBoost? = null,
+
+    val moveToDeck: String? = null,
     // endregion PIECE_TARGET
 
     // SET_PIECE
@@ -49,7 +51,8 @@ class ActionToke(
                 pieceTarget_Boost_Toke = action.pieceTarget_Boost_Toke,
                 piece = action.piece,
                 deckAction = action.deckAction,
-                pieceEmitterId = action.pieceEmitterId
+                pieceEmitterId = action.pieceEmitterId,
+                moveToDeck = action.moveToDeck
             )
         }
     }

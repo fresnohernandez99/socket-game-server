@@ -6,7 +6,5 @@ abstract class AbstractItem {
     abstract val id: String
     abstract val name: String
 
-    abstract fun effect(): AbstractEffect
-
     abstract fun boost(): AbstractBoost
 }

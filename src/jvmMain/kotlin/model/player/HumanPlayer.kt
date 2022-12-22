@@ -11,8 +11,8 @@ import model.result.ActionToke
 class HumanPlayer(
     override val name: String,
     override val playerId: String,
-    val lifePoints: Int,
-    var lifePointsLose: Int,
+    override val lifePoints: Int,
+    override var lifePointsLose: Int,
     override val pieceDeck: PieceDeck,
     override val handDeck: HandDeck,
     override val graveyardDeck: GraveyardDeck

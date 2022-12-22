@@ -12,9 +12,11 @@ abstract class AbstractDeck {
         return items
     }
 
-    fun addItem(position: Int, piece: AbstractPiece): ArrayList<AbstractPiece> {
-        if (position < items.size) items.add(piece)
-        else items.add(piece)
+    fun addItem(position: Int, piece: AbstractPiece?): ArrayList<AbstractPiece> {
+        if (piece != null) {
+            if (position < items.size) items.add(position, piece)
+            else items.add(piece)
+        }
         return items
     }
 
@@ -55,4 +57,6 @@ abstract class AbstractDeck {
         }
         return extracted
     }
+
+    fun amount() = items.size
 }

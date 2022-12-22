@@ -6,11 +6,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import socket.ServerSocket
+import javax.websocket.server.ServerContainer
 
 @Composable
 @Preview
 fun App() {
     var text by remember { mutableStateOf("Hello, World!") }
+
+    val server = ServerSocket()
 
     MaterialTheme {
         Button(onClick = {
