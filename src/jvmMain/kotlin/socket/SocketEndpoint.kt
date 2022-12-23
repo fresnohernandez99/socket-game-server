@@ -9,7 +9,6 @@ import javax.websocket.EncodeException
 import javax.websocket.server.PathParam
 import javax.websocket.server.ServerEndpoint
 
-
 @ServerEndpoint(
     value = "/server/{username}",
     decoders = [MessageDecoder::class],
@@ -17,8 +16,6 @@ import javax.websocket.server.ServerEndpoint
 )
 class SocketEndpoint {
     private var session: Session? = null
-    private val socketEndpoints: MutableSet<SocketEndpoint> = CopyOnWriteArraySet()
-    private val users: HashMap<String, String> = HashMap()
 
     @OnOpen
     @Throws(IOException::class)
@@ -33,7 +30,6 @@ class SocketEndpoint {
         message.from = username
         message.content = "Connected!"
         broadcast(message)
-        println("!!!!")
     }
 
     @OnMessage
@@ -66,11 +62,18 @@ class SocketEndpoint {
                     endpoint.session?.basicRemote?.sendObject(message)
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    println("!!!!")
                 } catch (e: EncodeException) {
                     e.printStackTrace()
+                    println("!!!!")
                 }
             }
         })
 
+    }
+
+    companion object {
+        private val socketEndpoints: MutableSet<SocketEndpoint> = CopyOnWriteArraySet()
+        private val users: HashMap<String, String> = HashMap()
     }
 }

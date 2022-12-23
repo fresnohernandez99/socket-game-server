@@ -8,7 +8,8 @@ import java.io.InputStreamReader
 
 class ServerSocket {
     init {
-        val server: Server = Server("localhost", 8025, "/", SocketEndpoint::class.java)
+        val server = Server("localhost", 8025, "/", SocketEndpoint::class.java)
+
         try {
             server.start()
             println("--- server is running")
@@ -20,5 +21,9 @@ class ServerSocket {
         } finally {
             server.stop()
         }
+    }
+
+    companion object {
+
     }
 }

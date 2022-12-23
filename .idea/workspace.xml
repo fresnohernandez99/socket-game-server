@@ -5,26 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ba6f51a-c39e-4ce6-b42f-1ef53d344bf1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/Message.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/MessageDecoder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/MessageEncoder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/ServerSocket.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/GameServer_jvm_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/GameServer_jvm_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/SocketManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/AbstractDeck.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/AbstractDeck.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/item/AbstractItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/item/AbstractItem.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/AbstractPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/AbstractPlayer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/RoundResult.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/RoundResult.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/Terrain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/Terrain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/space/DefeatCause.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/space/DefeatCause.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/ServerSocket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/ServerSocket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
