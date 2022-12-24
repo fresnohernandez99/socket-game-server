@@ -1,8 +1,9 @@
-import socket.Message
-import socket.MessageDecoder
-import socket.MessageEncoder
+import androidx.compose.runtime.mutableStateListOf
+import socket.model.Message
+import socket.coder.MessageDecoder
+import socket.coder.MessageEncoder
+import socket.model.Room
 import java.io.IOException
-import java.util.concurrent.CopyOnWriteArraySet
 import java.util.function.Consumer
 import javax.websocket.*
 import javax.websocket.EncodeException
@@ -62,10 +63,8 @@ class SocketEndpoint {
                     endpoint.session?.basicRemote?.sendObject(message)
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    println("!!!!")
                 } catch (e: EncodeException) {
                     e.printStackTrace()
-                    println("!!!!")
                 }
             }
         })
@@ -73,7 +72,8 @@ class SocketEndpoint {
     }
 
     companion object {
-        private val socketEndpoints: MutableSet<SocketEndpoint> = CopyOnWriteArraySet()
-        private val users: HashMap<String, String> = HashMap()
+        val socketEndpoints = mutableStateListOf<SocketEndpoint>()
+        val rooms = mutableStateListOf<Room>()
+        val users: HashMap<String, String> = HashMap()
     }
 }

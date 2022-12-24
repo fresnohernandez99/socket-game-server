@@ -1,6 +1,7 @@
-package socket
+package socket.coder
 
 import com.google.gson.Gson
+import socket.model.Message
 import javax.websocket.DecodeException
 import javax.websocket.Decoder
 import javax.websocket.EndpointConfig
