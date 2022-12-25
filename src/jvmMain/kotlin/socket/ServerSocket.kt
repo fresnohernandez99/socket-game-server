@@ -1,29 +1,57 @@
 package socket
 
 import SocketEndpoint
+import model.terrain.Terrain
+import model.terrain.space.DefeatCause
+import model.terrain.space.Space
+import model.terrain.space.SpaceConfiguration
 import org.glassfish.tyrus.server.Server
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.net.Socket
 
 
 class ServerSocket {
-    init {
-        val server = Server("localhost", 8025, "/", SocketEndpoint::class.java)
+    val socket = Server("localhost", 8025, "/", SocketEndpoint::class.java)
 
+    init {
+
+    }
+
+    suspend fun initServer() {
+        // TODO load JSON configurations from file
+
+        // init configurations
+        serverConfigurations = Terrain(
+            space = Space(
+                SpaceConfiguration(
+                    defeatCause = DefeatCause.SINGLE_PIECE_DEFEATED
+                )
+            ),
+            rules = ArrayList()
+        )
+
+        // start socket server
         try {
-            server.start()
+            socket.start()
             println("--- server is running")
-            println("--- press any key to stop the server")
             val bufferRead = BufferedReader(InputStreamReader(System.`in`))
             bufferRead.readLine()
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            server.stop()
+            socket.stop()
         }
     }
 
-    companion object {
+    fun stopServer() {
+        socket.stop()
+        SocketEndpoint.rooms.clear()
+        SocketEndpoint.socketEndpoints.clear()
+        SocketEndpoint.users.clear()
+    }
 
+    companion object {
+        lateinit var serverConfigurations: Terrain
     }
 }

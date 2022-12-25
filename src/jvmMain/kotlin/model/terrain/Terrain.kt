@@ -11,4 +11,6 @@ class Terrain(
     var playersList: ArrayList<AbstractPlayer> = ArrayList(),
     var loserPlayers: ArrayList<AbstractPlayer> = ArrayList(),
     val spaceGrid: SpaceGrid = SpaceGrid()
-)
+) {
+    fun copy() = Terrain(space, rules)
+}

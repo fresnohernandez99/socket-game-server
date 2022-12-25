@@ -1,4 +1,6 @@
 import androidx.compose.runtime.mutableStateListOf
+import model.terrain.Terrain
+import socket.Constants.INTENT_CANCEL_ROOM
 import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
 import socket.Constants.INTENT_CREATE_ROOM
@@ -53,6 +55,14 @@ class SocketEndpoint {
 
             INTENT_CLOSE_ROOM -> {
                 val response = SocketManager.closeRoom(this, session, message)
+                sendToRoom(response.to!!, response)
+
+                //enviar configuracion de partida
+
+            }
+
+            INTENT_CANCEL_ROOM -> {
+                val response = SocketManager.cancelRoom(this, session, message)
                 sendToRoom(response.to!!, response)
             }
         }
@@ -131,7 +141,5 @@ class SocketEndpoint {
         val socketEndpoints = mutableStateListOf<SocketEndpoint>()
         val rooms = mutableStateListOf<Room>()
         val users: HashMap<String, String> = HashMap()
-
-
     }
 }

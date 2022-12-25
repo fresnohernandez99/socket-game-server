@@ -48,6 +48,22 @@ object SocketManager {
 
         val message = Message(Constants.INTENT_CLOSE_ROOM)
         message.from = session.id
+        message.to = request.hostId
+        message.content = Response(200, INTENT_CORRECT, null).toJson()
+        return message
+    }
+
+    fun cancelRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+        val request = Gson().fromJson(msg.content, StartRoomRequest::class.java)
+
+        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && it.owner == request.hostId }
+
+        if (findingRoom != null) {
+            SocketEndpoint.rooms.remove(findingRoom)
+        }
+
+        val message = Message(Constants.INTENT_CANCEL_ROOM)
+        message.from = session.id
         message.to = request.roomId
         message.content = Response(200, INTENT_CORRECT, null).toJson()
         return message
