@@ -6,6 +6,5 @@ class Message(
     var endpoint: String,
     var from: String? = null,
     var to: String? = null,
-    var room: String? = null,
     var content: JsonObject? = null
 )

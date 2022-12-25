@@ -1,6 +1,7 @@
 import androidx.compose.runtime.mutableStateListOf
-import com.google.gson.Gson
+import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
+import socket.Constants.INTENT_CREATE_ROOM
 import socket.Constants.INTENT_RE_CONNECTING
 import socket.Constants.INTENT_WITH_ERROR
 import socket.SocketManager
@@ -16,9 +17,7 @@ import javax.websocket.server.PathParam
 import javax.websocket.server.ServerEndpoint
 
 @ServerEndpoint(
-    value = "/server/{intent}/{username}",
-    decoders = [MessageDecoder::class],
-    encoders = [MessageEncoder::class]
+    value = "/server/{intent}/{username}", decoders = [MessageDecoder::class], encoders = [MessageEncoder::class]
 )
 class SocketEndpoint {
     private var session: Session? = null
@@ -26,9 +25,7 @@ class SocketEndpoint {
     @OnOpen
     @Throws(IOException::class)
     fun onOpen(
-        session: Session,
-        @PathParam("username") username: String,
-        @PathParam("intent") intent: String
+        session: Session, @PathParam("username") username: String, @PathParam("intent") intent: String
     ) {
         this.session = session
 
@@ -50,8 +47,13 @@ class SocketEndpoint {
         message.from = users[session.id]
 
         when (message.endpoint) {
-            "3" -> {
-                SocketManager.createRoom(this, session, message)
+            INTENT_CREATE_ROOM -> {
+                sendTo(SocketManager.createRoom(this, session, message))
+            }
+
+            INTENT_CLOSE_ROOM -> {
+                val response = SocketManager.closeRoom(this, session, message)
+                sendToRoom(response.to!!, response)
             }
         }
 
@@ -61,8 +63,7 @@ class SocketEndpoint {
     @OnClose
     @Throws(IOException::class)
     fun onClose(session: Session) {
-        socketEndpoints.remove(this)
-        /*val message = Message()
+        socketEndpoints.remove(this)/*val message = Message()
         message.from = users[session.id]
         message.content = "Disconnected!"
         broadcast(message)*/
@@ -94,8 +95,7 @@ class SocketEndpoint {
         socketEndpoints.forEach(Consumer { endpoint: SocketEndpoint ->
             synchronized(endpoint) {
                 try {
-                    if (endpoint.session!!.id == message.to)
-                        endpoint.session?.basicRemote?.sendObject(message)
+                    if (endpoint.session!!.id == message.to) endpoint.session?.basicRemote?.sendObject(message)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 } catch (e: EncodeException) {
@@ -103,7 +103,28 @@ class SocketEndpoint {
                 }
             }
         })
+    }
 
+    @Throws(IOException::class, EncodeException::class)
+    private fun sendToRoom(roomId: String, message: Message) {
+        val roomUsers = rooms.find { it.id == roomId }
+
+        roomUsers?.let { room ->
+
+            socketEndpoints.forEach(Consumer { endpoint: SocketEndpoint ->
+                synchronized(endpoint) {
+                    try {
+                        val isInRoom = room.users.find { it == endpoint.session!!.id }
+                        if (isInRoom != null) endpoint.session?.basicRemote?.sendObject(message)
+
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: EncodeException) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+        }
     }
 
     companion object {
