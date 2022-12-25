@@ -16,11 +16,12 @@ import views.TextInfo
 @Composable
 @Preview
 fun App() {
-    val serverState = SocketEndpoint.socketEndpoints
+    val users = SocketEndpoint.socketEndpoints
+    val rooms = SocketEndpoint.rooms
 
     MaterialTheme {
         Column {
-            if (serverState.size != 0) TextInfo(serverState.size) else Text("No hay conectados")
+            if (users.size != 0) TextInfo(users.size, rooms.size) else Text("No hay conectados")
         }
     }
 

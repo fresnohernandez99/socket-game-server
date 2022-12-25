@@ -5,8 +5,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun TextInfo(serverState: Int) {
+fun TextInfo(users: Int, rooms: Int) {
     Column {
-        Text("Connected users: ${serverState}")
+        Text("Connected users: ${users}")
+        Text("Available rooms: ${rooms}")
     }
 }

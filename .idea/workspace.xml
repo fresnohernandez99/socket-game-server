@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ba6f51a-c39e-4ce6-b42f-1ef53d344bf1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/views/Info.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/Constants.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/Message.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/Message.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/MessageDecoder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/coder/MessageDecoder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/MessageEncoder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/coder/MessageEncoder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/SocketManager.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/Message.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/Message.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/response/Response.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/response/Response.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/views/Info.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/views/Info.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +48,7 @@
         <option value="Kotlin Interface" />
         <option value="Kotlin Enum" />
         <option value="Kotlin File" />
+        <option value="Kotlin Object" />
         <option value="Kotlin Class" />
       </list>
     </option>
