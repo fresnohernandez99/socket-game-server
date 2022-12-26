@@ -25,9 +25,12 @@ object SocketManager {
     }
 
     fun createRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+
         val room = Gson().fromJson(msg.content, Room::class.java)
         room.owner = session.id
-        room.users.add(session.id)
+        room.users = ArrayList()
+        room.users?.add(session.id)
+
         SocketEndpoint.rooms.add(room)
 
         val message = Message(Constants.INTENT_CREATE_ROOM)

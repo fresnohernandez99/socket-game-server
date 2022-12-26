@@ -26,11 +26,11 @@ class GameEngine {
     fun initConfiguration(
         configuration: SpaceConfiguration,
         initRules: ArrayList<AbstractRule> = ArrayList(),
-    ): Terrain {
+    ): GameEngine {
         if (!this::terrain.isInitialized) terrain = Terrain(
             space = Space(configuration), rules = initRules
         )
-        return terrain
+        return this
     }
 
     /**

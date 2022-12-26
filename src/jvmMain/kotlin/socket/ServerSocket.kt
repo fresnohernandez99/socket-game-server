@@ -14,10 +14,6 @@ import java.net.Socket
 class ServerSocket {
     val socket = Server("localhost", 8025, "/", SocketEndpoint::class.java)
 
-    init {
-
-    }
-
     suspend fun initServer() {
         // TODO load JSON configurations from file
 

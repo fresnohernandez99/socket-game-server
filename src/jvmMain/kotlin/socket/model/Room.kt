@@ -1,11 +1,13 @@
 package socket.model
 
+import model.terrain.space.SpaceConfiguration
+
 class Room(
     val id: String,
     var owner: String? = null,
     val name: String,
     val code: String,
-    val maxPlayer: Int = 2,
     var closed: Boolean = false,
-    val users: ArrayList<String> = ArrayList()
+    var configuration: SpaceConfiguration,
+    var users: ArrayList<String>? = null
 )

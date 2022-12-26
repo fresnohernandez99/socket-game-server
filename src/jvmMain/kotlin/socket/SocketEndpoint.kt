@@ -124,7 +124,7 @@ class SocketEndpoint {
             socketEndpoints.forEach(Consumer { endpoint: SocketEndpoint ->
                 synchronized(endpoint) {
                     try {
-                        val isInRoom = room.users.find { it == endpoint.session!!.id }
+                        val isInRoom = room.users?.find { it == endpoint.session!!.id }
                         if (isInRoom != null) endpoint.session?.basicRemote?.sendObject(message)
 
                     } catch (e: IOException) {
