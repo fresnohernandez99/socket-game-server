@@ -3,8 +3,10 @@ package socket
 import SocketEndpoint
 import com.google.gson.Gson
 import socket.Constants.INTENT_CORRECT
+import socket.Constants.INTENT_WITH_ERROR
 import socket.model.Message
 import socket.model.Room
+import socket.model.request.JoinRoomRequest
 import socket.model.request.StartRoomRequest
 import socket.model.response.Response
 import javax.websocket.Session
@@ -50,7 +52,7 @@ object SocketManager {
 
         val message = Message(Constants.INTENT_CLOSE_ROOM)
         message.from = session.id
-        message.to = request.hostId
+        message.roomId = request.roomId
         message.content = Response(200, INTENT_CORRECT, null).toJson()
         return message
     }
@@ -66,7 +68,7 @@ object SocketManager {
 
         val message = Message(Constants.INTENT_CANCEL_ROOM)
         message.from = session.id
-        message.to = request.roomId
+        message.roomId = request.roomId
         message.content = Response(200, INTENT_CORRECT, null).toJson()
         return message
     }
@@ -76,6 +78,27 @@ object SocketManager {
         message.from = session.id
         message.to = session.id
         message.content = Response(200, INTENT_CORRECT, SocketEndpoint.rooms.toList()).toJson()
+        return message
+    }
+
+    fun joinRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+        val request = Gson().fromJson(msg.content, JoinRoomRequest::class.java)
+
+        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && !(it.users!!.contains(session.id)) }
+
+        val message = Message(Constants.INTENT_JOIN_ROOM)
+
+        if (findingRoom != null) {
+            findingRoom.users!!.add(session.id)
+            message.from = session.id
+            message.roomId = findingRoom.id
+            message.content = Response(200, INTENT_CORRECT, SocketEndpoint.rooms.toList()).toJson()
+        } else {
+            message.from = session.id
+            message.to = session.id
+            message.content = Response(400, INTENT_WITH_ERROR, null).toJson()
+        }
+
         return message
     }
 }

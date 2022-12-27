@@ -4,6 +4,7 @@ import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
 import socket.Constants.INTENT_CREATE_ROOM
 import socket.Constants.INTENT_GET_ROOMS
+import socket.Constants.INTENT_JOIN_ROOM
 import socket.Constants.INTENT_RE_CONNECTING
 import socket.Constants.INTENT_WITH_ERROR
 import socket.SocketManager
@@ -32,7 +33,7 @@ class SocketEndpoint {
     ) {
         this.session = session
 
-        sendTo(
+        autoSend(
             when (intent) {
                 INTENT_CONNECTING -> SocketManager.connecting(this, session, username)
                 INTENT_RE_CONNECTING -> SocketManager.connecting(this, session, username)
@@ -51,25 +52,27 @@ class SocketEndpoint {
 
         when (message.endpoint) {
             INTENT_CREATE_ROOM -> {
-                sendTo(SocketManager.createRoom(this, session, message))
+                autoSend(SocketManager.createRoom(this, session, message))
             }
 
             INTENT_CLOSE_ROOM -> {
                 val response = SocketManager.closeRoom(this, session, message)
-                sendToRoom(response.to!!, response)
-
-                //enviar configuracion de partida
-
+                autoSend(response)
             }
 
             INTENT_CANCEL_ROOM -> {
                 val response = SocketManager.cancelRoom(this, session, message)
-                sendToRoom(response.to!!, response)
+                autoSend(response)
             }
 
             INTENT_GET_ROOMS -> {
                 val response = SocketManager.getRooms(this, session)
-                sendTo(response)
+                autoSend(response)
+            }
+
+            INTENT_JOIN_ROOM -> {
+                val response = SocketManager.joinRoom(this, session, message)
+                autoSend(response)
             }
         }
 
@@ -88,6 +91,14 @@ class SocketEndpoint {
     @OnError
     fun onError(session: Session?, throwable: Throwable?) {
         // Do error handling here
+    }
+
+    fun autoSend(message: Message) {
+        if (message.broadcast) broadcast(message)
+
+        if (message.roomId != null) sendToRoom(message)
+
+        if (message.to != null) sendToRoom(message)
     }
 
     @Throws(IOException::class, EncodeException::class)
@@ -127,8 +138,8 @@ class SocketEndpoint {
     }
 
     @Throws(IOException::class, EncodeException::class)
-    private fun sendToRoom(roomId: String, message: Message) {
-        val roomUsers = rooms.find { it.id == roomId }
+    private fun sendToRoom(message: Message) {
+        val roomUsers = rooms.find { it.id == message.roomId }
 
         roomUsers?.let { room ->
 
