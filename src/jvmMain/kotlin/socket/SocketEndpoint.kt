@@ -1,5 +1,4 @@
 import androidx.compose.runtime.mutableStateListOf
-import model.terrain.Terrain
 import socket.Constants.INTENT_CANCEL_ROOM
 import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
@@ -11,6 +10,7 @@ import socket.coder.MessageDecoder
 import socket.coder.MessageEncoder
 import socket.model.Message
 import socket.model.Room
+import util.Logger
 import java.io.IOException
 import java.util.function.Consumer
 import javax.websocket.*
@@ -86,6 +86,8 @@ class SocketEndpoint {
 
     @Throws(IOException::class, EncodeException::class)
     private fun broadcast(message: Message) {
+        Logger.log(TAG_SEND_BROADCAST, "", message)
+
         socketEndpoints.forEach(Consumer { endpoint: SocketEndpoint ->
             synchronized(endpoint) {
                 try {
@@ -102,6 +104,9 @@ class SocketEndpoint {
 
     @Throws(IOException::class, EncodeException::class)
     private fun sendTo(message: Message) {
+
+        Logger.log(TAG_SEND_TO, message.to!!, message)
+
         socketEndpoints.forEach(Consumer { endpoint: SocketEndpoint ->
             synchronized(endpoint) {
                 try {
@@ -120,6 +125,8 @@ class SocketEndpoint {
         val roomUsers = rooms.find { it.id == roomId }
 
         roomUsers?.let { room ->
+
+            Logger.log(TAG_SEND_TO_ROOM, room.id, message)
 
             socketEndpoints.forEach(Consumer { endpoint: SocketEndpoint ->
                 synchronized(endpoint) {
@@ -141,5 +148,9 @@ class SocketEndpoint {
         val socketEndpoints = mutableStateListOf<SocketEndpoint>()
         val rooms = mutableStateListOf<Room>()
         val users: HashMap<String, String> = HashMap()
+
+        private const val TAG_SEND_TO = "Send-To"
+        private const val TAG_SEND_TO_ROOM = "Send-To-Room"
+        private const val TAG_SEND_BROADCAST = "Send-Broadcast"
     }
 }
