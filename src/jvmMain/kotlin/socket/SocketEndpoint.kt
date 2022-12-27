@@ -3,6 +3,7 @@ import socket.Constants.INTENT_CANCEL_ROOM
 import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
 import socket.Constants.INTENT_CREATE_ROOM
+import socket.Constants.INTENT_GET_ROOMS
 import socket.Constants.INTENT_RE_CONNECTING
 import socket.Constants.INTENT_WITH_ERROR
 import socket.SocketManager
@@ -64,6 +65,11 @@ class SocketEndpoint {
             INTENT_CANCEL_ROOM -> {
                 val response = SocketManager.cancelRoom(this, session, message)
                 sendToRoom(response.to!!, response)
+            }
+
+            INTENT_GET_ROOMS -> {
+                val response = SocketManager.getRooms(this, session)
+                sendTo(response)
             }
         }
 

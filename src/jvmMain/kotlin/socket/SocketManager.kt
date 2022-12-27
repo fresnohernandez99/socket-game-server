@@ -25,7 +25,6 @@ object SocketManager {
     }
 
     fun createRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-
         val room = Gson().fromJson(msg.content, Room::class.java)
         room.owner = session.id
         room.users = ArrayList()
@@ -69,6 +68,14 @@ object SocketManager {
         message.from = session.id
         message.to = request.roomId
         message.content = Response(200, INTENT_CORRECT, null).toJson()
+        return message
+    }
+
+    fun getRooms(socketEndpoint: SocketEndpoint, session: Session): Message {
+        val message = Message(Constants.INTENT_GET_ROOMS)
+        message.from = session.id
+        message.to = session.id
+        message.content = Response(200, INTENT_CORRECT, SocketEndpoint.rooms.toList()).toJson()
         return message
     }
 }
