@@ -18,7 +18,7 @@ object SocketManager {
         val message = Message(Constants.INTENT_CONNECTING)
         message.from = session.id
         message.to = session.id
-        message.content = Response(200, INTENT_CORRECT, null).toJson()
+        message.content = Response<Any>(INTENT_CORRECT).toJson()
         return message
     }
 
@@ -37,7 +37,7 @@ object SocketManager {
         val message = Message(Constants.INTENT_CREATE_ROOM)
         message.from = session.id
         message.to = session.id
-        message.content = Response(200, INTENT_CORRECT, null).toJson()
+        message.content = Response(INTENT_CORRECT, null).toJson()
         return message
     }
 
@@ -53,7 +53,7 @@ object SocketManager {
         val message = Message(Constants.INTENT_CLOSE_ROOM)
         message.from = session.id
         message.roomId = request.roomId
-        message.content = Response(200, INTENT_CORRECT, null).toJson()
+        message.content = Response(INTENT_CORRECT, null).toJson()
         return message
     }
 
@@ -69,7 +69,7 @@ object SocketManager {
         val message = Message(Constants.INTENT_CANCEL_ROOM)
         message.from = session.id
         message.roomId = request.roomId
-        message.content = Response(200, INTENT_CORRECT, null).toJson()
+        message.content = Response(INTENT_CORRECT, null).toJson()
         return message
     }
 
@@ -77,14 +77,18 @@ object SocketManager {
         val message = Message(Constants.INTENT_GET_ROOMS)
         message.from = session.id
         message.to = session.id
-        message.content = Response(200, INTENT_CORRECT, SocketEndpoint.rooms.toList()).toJson()
+        message.content = Response(INTENT_CORRECT, SocketEndpoint.rooms.toList()).toJson()
         return message
     }
 
     fun joinRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
         val request = Gson().fromJson(msg.content, JoinRoomRequest::class.java)
 
-        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && !(it.users!!.contains(session.id)) }
+        val findingRoom = SocketEndpoint.rooms.find {
+            it.id == request.roomId &&
+                    !(it.users!!.contains(session.id)) &&
+                    it.code == request.code
+        }
 
         val message = Message(Constants.INTENT_JOIN_ROOM)
 
@@ -92,13 +96,18 @@ object SocketManager {
             findingRoom.users!!.add(session.id)
             message.from = session.id
             message.roomId = findingRoom.id
-            message.content = Response(200, INTENT_CORRECT, SocketEndpoint.rooms.toList()).toJson()
+            message.content = Response(INTENT_CORRECT, findingRoom).toJson()
         } else {
             message.from = session.id
             message.to = session.id
-            message.content = Response(400, INTENT_WITH_ERROR, null).toJson()
+            message.content = Response(INTENT_WITH_ERROR, null).toJson()
         }
 
         return message
     }
+
+    //TODO
+    fun updateRoomConfig() {}
+
+
 }

@@ -98,7 +98,7 @@ class SocketEndpoint {
 
         if (message.roomId != null) sendToRoom(message)
 
-        if (message.to != null) sendToRoom(message)
+        if (message.to != null) sendTo(message)
     }
 
     @Throws(IOException::class, EncodeException::class)
