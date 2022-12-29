@@ -82,7 +82,11 @@ class SocketEndpoint {
     @OnClose
     @Throws(IOException::class)
     fun onClose(session: Session) {
-        socketEndpoints.remove(this)/*val message = Message()
+        val userDisconnected = socketEndpoints.find { it.session?.id == session.id }
+        socketEndpoints.remove(userDisconnected)
+
+        // TODO avisar a la room en la q estaba
+        /*val message = Message()
         message.from = users[session.id]
         message.content = "Disconnected!"
         broadcast(message)*/

@@ -10,6 +10,28 @@ import javax.websocket.EndpointConfig
 class MessageDecoder : Decoder.Text<Message?> {
     @Throws(DecodeException::class)
     override fun decode(s: String?): Message {
+        println("Undecode msg received: $s")
+
+        if (s != null) {
+            val firstBraced = s.indexOf('{')
+            val lastBraced = s.lastIndexOf('}')
+
+            println("f: $firstBraced")
+            println("l: $lastBraced")
+            println("size: ${s.length}")
+
+            if (firstBraced != 0 && lastBraced != s.length + 1) {
+                val godotMsg = s.substring(firstBraced, lastBraced + 1)
+                try {
+                    return gson.fromJson(
+                        godotMsg,
+                        Message::class.java
+                    )
+                } catch (e: Exception) {
+                    println("Decoding error: $e")
+                }
+            }
+        }
         return gson.fromJson(s, Message::class.java)
     }
 
