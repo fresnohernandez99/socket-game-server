@@ -11,11 +11,11 @@ import model.result.ActionToke
 class HumanPlayer(
     override val name: String,
     override val playerId: String,
-    override val lifePoints: Int,
-    override var lifePointsLose: Int,
-    override val pieceDeck: PieceDeck,
-    override val handDeck: HandDeck,
-    override val graveyardDeck: GraveyardDeck
+    override val lifePoints: Int = 0,
+    override var lifePointsLose: Int = 0,
+    override val pieceDeck: PieceDeck = PieceDeck(),
+    override val handDeck: HandDeck = HandDeck(),
+    override val graveyardDeck: GraveyardDeck = GraveyardDeck()
 ) : AbstractPlayer() {
     override fun applyAction(action: Action): ActionToke {
         action.playerTarget_Boost_Toke?.let {
