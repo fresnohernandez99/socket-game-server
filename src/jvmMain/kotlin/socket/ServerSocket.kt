@@ -40,6 +40,20 @@ class ServerSocket {
         }
     }
 
+    fun cleanRooms() {
+        SocketEndpoint.rooms.clear()
+    }
+
+    fun cleanServer() {
+        SocketEndpoint.rooms.clear()
+        SocketEndpoint.socketEndpoints.clear()
+        SocketEndpoint.users.clear()
+    }
+
+    fun startServer() {
+        socket.start()
+    }
+
     fun stopServer() {
         socket.stop()
         SocketEndpoint.rooms.clear()
