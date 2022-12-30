@@ -1,4 +1,5 @@
 import androidx.compose.runtime.mutableStateListOf
+import model.player.HumanPlayer
 import socket.Constants.INTENT_CANCEL_ROOM
 import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
@@ -6,6 +7,8 @@ import socket.Constants.INTENT_CREATE_ROOM
 import socket.Constants.INTENT_GET_ROOMS
 import socket.Constants.INTENT_JOIN_ROOM
 import socket.Constants.INTENT_RE_CONNECTING
+import socket.Constants.INTENT_UPLOAD_INFO
+import socket.Constants.INTENT_USERS_INFO
 import socket.Constants.INTENT_WITH_ERROR
 import socket.SocketManager
 import socket.coder.MessageDecoder
@@ -72,6 +75,16 @@ class SocketEndpoint {
 
             INTENT_JOIN_ROOM -> {
                 val response = SocketManager.joinRoom(this, session, message)
+                autoSend(response)
+            }
+
+            INTENT_USERS_INFO -> {
+                val response = SocketManager.getUsersInfo(this, session, message)
+                autoSend(response)
+            }
+
+            INTENT_UPLOAD_INFO -> {
+                val response = SocketManager.uploadUserInfo(this, session, message)
                 autoSend(response)
             }
         }
@@ -171,6 +184,8 @@ class SocketEndpoint {
     companion object {
         val socketEndpoints = mutableStateListOf<SocketEndpoint>()
         val rooms = mutableStateListOf<Room>()
+
+        val usersInfo: HashMap<String, HumanPlayer> = HashMap()
         val users: HashMap<String, String> = HashMap()
 
         private const val TAG_SEND_TO = "Send-To"

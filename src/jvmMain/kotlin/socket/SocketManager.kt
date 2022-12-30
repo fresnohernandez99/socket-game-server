@@ -2,12 +2,15 @@ package socket
 
 import SocketEndpoint
 import com.google.gson.Gson
+import model.player.HumanPlayer
 import socket.Constants.INTENT_CORRECT
 import socket.Constants.INTENT_WITH_ERROR
 import socket.model.Message
 import socket.model.Room
+import socket.model.request.GetUsersInfoRequest
 import socket.model.request.JoinRoomRequest
 import socket.model.request.StartRoomRequest
+import socket.model.request.UploadUserInfoRequest
 import socket.model.response.Response
 import javax.websocket.Session
 
@@ -83,6 +86,9 @@ object SocketManager {
 
         listToSend.forEach {
             it.code = ""
+
+            if (it.closed) listToSend.remove(it)
+            else if (it.configuration.maxPlayers == it.users!!.size) listToSend.remove(it)
         }
 
         val message = Message(Constants.INTENT_GET_ROOMS)
@@ -98,7 +104,8 @@ object SocketManager {
         val findingRoom = SocketEndpoint.rooms.find {
             it.id == request.roomId &&
                     !(it.users!!.contains(session.id)) &&
-                    it.code == request.code
+                    it.code == request.code &&
+                    it.configuration.maxPlayers < it.users!!.size
         }
 
         val message = Message(Constants.INTENT_JOIN_ROOM)
@@ -113,6 +120,41 @@ object SocketManager {
             message.to = session.id
             message.content = Response(INTENT_WITH_ERROR, null).toJson()
         }
+
+        return message
+    }
+
+    fun getUsersInfo(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+        val request = Gson().fromJson(msg.content, GetUsersInfoRequest::class.java)
+
+        val usersData = ArrayList<HumanPlayer>()
+
+        request.userIds.forEach {
+            val i = SocketEndpoint.usersInfo[it]
+
+            if (i != null)
+                usersData.add(
+                    i
+                )
+        }
+
+        val message = Message(Constants.INTENT_USERS_INFO)
+        message.from = session.id
+        message.to = session.id
+        message.content = Response(INTENT_CORRECT, usersData).toJson()
+
+        return message
+    }
+
+    fun uploadUserInfo(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+        val request = Gson().fromJson(msg.content, UploadUserInfoRequest::class.java)
+
+        SocketEndpoint.usersInfo[session.id] = request.playerInfo
+
+        val message = Message(Constants.INTENT_UPLOAD_INFO)
+        message.from = session.id
+        message.to = session.id
+        message.content = Response(INTENT_CORRECT, null).toJson()
 
         return message
     }
