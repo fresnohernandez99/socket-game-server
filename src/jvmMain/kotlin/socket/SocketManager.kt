@@ -32,6 +32,9 @@ object SocketManager {
         room.users = ArrayList()
         room.users?.add(session.id)
 
+        val exists = SocketEndpoint.rooms.find { it.id == room.id }
+        if (exists != null) SocketEndpoint.rooms.remove(exists)
+
         SocketEndpoint.rooms.add(room)
 
         val message = Message(Constants.INTENT_CREATE_ROOM)
@@ -74,10 +77,18 @@ object SocketManager {
     }
 
     fun getRooms(socketEndpoint: SocketEndpoint, session: Session): Message {
+        val listToSend = ArrayList<Room>()
+
+        listToSend.addAll(SocketEndpoint.rooms.toList())
+
+        listToSend.forEach {
+            it.code = ""
+        }
+
         val message = Message(Constants.INTENT_GET_ROOMS)
         message.from = session.id
         message.to = session.id
-        message.content = Response(INTENT_CORRECT, SocketEndpoint.rooms.toList()).toJson()
+        message.content = Response(INTENT_CORRECT, listToSend.toList()).toJson()
         return message
     }
 

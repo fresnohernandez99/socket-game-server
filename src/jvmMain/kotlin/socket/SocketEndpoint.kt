@@ -85,6 +85,9 @@ class SocketEndpoint {
         val userDisconnected = socketEndpoints.find { it.session?.id == session.id }
         socketEndpoints.remove(userDisconnected)
 
+        val roomExists = rooms.find { it.id == session.id }
+        if (roomExists != null) rooms.remove(roomExists)
+
         // TODO avisar a la room en la q estaba
         /*val message = Message()
         message.from = users[session.id]

@@ -6,7 +6,7 @@ class Room(
     val id: String,
     var owner: String? = null,
     val name: String,
-    val code: String,
+    var code: String,
     var closed: Boolean = false,
     var configuration: SpaceConfiguration,
     var users: ArrayList<String>? = null
