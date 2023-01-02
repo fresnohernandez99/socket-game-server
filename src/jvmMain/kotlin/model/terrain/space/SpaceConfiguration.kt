@@ -10,6 +10,8 @@ class SpaceConfiguration(
     var maxPlayers: Int = 2,
     var maxActionsPerTurn: Int = 1,
     var maxTurns: Int = -1,
+    var maxLevelAllowedInRoom: Int = -1,
+    var minLevelAllowedInRoom: Int = -1,
     var minPlayers: Int = 2,
     var fieldSize: Int = -1,
     var defeatCause: Int,

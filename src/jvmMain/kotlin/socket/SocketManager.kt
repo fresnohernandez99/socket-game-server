@@ -63,19 +63,23 @@ object SocketManager {
         return message
     }
 
-    fun cancelRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+    fun abandonRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
         val request = Gson().fromJson(msg.content, StartRoomRequest::class.java)
 
-        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && it.owner == request.hostId }
+        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId }
 
         if (findingRoom != null) {
-            SocketEndpoint.rooms.remove(findingRoom)
+            if (findingRoom.owner == session.id)
+                SocketEndpoint.rooms.remove(findingRoom)
+            else {
+                findingRoom.users!!.remove(session.id)
+            }
         }
 
-        val message = Message(Constants.INTENT_CANCEL_ROOM)
+        val message = Message(Constants.INTENT_ABANDON_ROOM)
         message.from = session.id
         message.roomId = request.roomId
-        message.content = Response(INTENT_CORRECT, null).toJson()
+        message.content = Response(INTENT_CORRECT, session.id).toJson()
         return message
     }
 
@@ -105,8 +109,9 @@ object SocketManager {
             it.id == request.roomId &&
                     !(it.users!!.contains(session.id)) &&
                     it.code == request.code &&
-                    it.configuration.maxPlayers < it.users!!.size
+                    it.configuration.maxPlayers > it.users!!.size
         }
+
 
         val message = Message(Constants.INTENT_JOIN_ROOM)
 

@@ -1,6 +1,6 @@
 import androidx.compose.runtime.mutableStateListOf
 import model.player.HumanPlayer
-import socket.Constants.INTENT_CANCEL_ROOM
+import socket.Constants.INTENT_ABANDON_ROOM
 import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
 import socket.Constants.INTENT_CREATE_ROOM
@@ -63,8 +63,8 @@ class SocketEndpoint {
                 autoSend(response)
             }
 
-            INTENT_CANCEL_ROOM -> {
-                val response = SocketManager.cancelRoom(this, session, message)
+            INTENT_ABANDON_ROOM -> {
+                val response = SocketManager.abandonRoom(this, session, message)
                 autoSend(response)
             }
 
