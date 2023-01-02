@@ -11,6 +11,7 @@ import socket.model.request.GetUsersInfoRequest
 import socket.model.request.JoinRoomRequest
 import socket.model.request.StartRoomRequest
 import socket.model.request.UploadUserInfoRequest
+import socket.model.response.AbandonRoomResponse
 import socket.model.response.Response
 import javax.websocket.Session
 
@@ -66,20 +67,23 @@ object SocketManager {
     fun abandonRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
         val request = Gson().fromJson(msg.content, StartRoomRequest::class.java)
 
-        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId }
+        val findingRoomIndex = SocketEndpoint.rooms.indexOfFirst { it.id == request.roomId }
 
-        if (findingRoom != null) {
-            if (findingRoom.owner == session.id)
-                SocketEndpoint.rooms.remove(findingRoom)
-            else {
-                findingRoom.users!!.remove(session.id)
+        var roomId = ""
+
+        if (findingRoomIndex != -1) {
+            roomId = SocketEndpoint.rooms[findingRoomIndex].id
+            if (SocketEndpoint.rooms[findingRoomIndex].owner == session.id) {
+                SocketEndpoint.rooms.removeAt(findingRoomIndex)
+            } else {
+                SocketEndpoint.rooms[findingRoomIndex].users!!.removeAll { it == session.id }
             }
         }
 
         val message = Message(Constants.INTENT_ABANDON_ROOM)
         message.from = session.id
-        message.roomId = request.roomId
-        message.content = Response(INTENT_CORRECT, session.id).toJson()
+        message.broadcast = true
+        message.content = Response(INTENT_CORRECT, AbandonRoomResponse(session.id, roomId)).toJson()
         return message
     }
 
