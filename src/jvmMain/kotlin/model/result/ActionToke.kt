@@ -4,7 +4,6 @@ import model.action.Action
 import model.action.ActionType
 import model.deckAction.DeckAction
 import model.hero.move.AbstractMove
-import model.hero.move.boosts.AbstractBoost
 import model.terrain.AbstractPiece
 
 class ActionToke(

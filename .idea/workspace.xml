@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8ba6f51a-c39e-4ce6-b42f-1ef53d344bf1" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/equipment/AbstractEquipment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AbstractBoost.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/action/Action.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/armor/AbstractArmor.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/armor/ArmorParts.kt" beforeDir="false" />
@@ -17,7 +19,7 @@
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/armor/Helmet.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/classes/AbstractClass.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/classes/AbstractClass.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHealMode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHealMode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/boosts/AbstractBoost.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/boosts/AbstractBoost.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/boosts/AbstractBoost.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/boosts/NegativeBoost.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/boosts/PositiveBoost.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/AbstractStat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/AbstractStat.kt" afterDir="false" />
@@ -28,6 +30,7 @@
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Speed.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/stat/Strength.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/result/ActionToke.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,10 +108,10 @@
       <recent name="model.effect" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="model.hero.move" />
       <recent name="socket.model.response" />
       <recent name="socket.model.request" />
       <recent name="socket.coder" />
-      <recent name="model.hero.move" />
       <recent name="model.hero.stat" />
     </key>
   </component>
