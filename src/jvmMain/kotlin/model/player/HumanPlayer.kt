@@ -5,6 +5,7 @@ import model.deck.GraveyardDeck
 import model.deck.HandDeck
 import model.deck.PieceDeck
 import model.hero.move.AbstractBoost
+import model.hero.stat.AbstractStat
 import model.result.ActionToke
 
 class HumanPlayer(
@@ -12,6 +13,7 @@ class HumanPlayer(
     override val playerId: String,
     override val lifePoints: Int = 0,
     override var lifePointsLose: Int = 0,
+    var stats: ArrayList<AbstractStat> = ArrayList(),
     override val pieceDeck: PieceDeck = PieceDeck(),
     override val handDeck: HandDeck = HandDeck(),
     override val graveyardDeck: GraveyardDeck = GraveyardDeck()
@@ -19,14 +21,7 @@ class HumanPlayer(
     override fun applyAction(action: Action): ActionToke {
         action.move?.let {
             if (it is AbstractBoost) {
-                if (it.value > 0) {
-                    if (lifePointsLose < it.value) lifePointsLose = 0
-                    else if (lifePointsLose > 0) lifePointsLose -= it.value
-                }
-
-                if (it.value < 0) {
-                    lifePointsLose += it.value
-                }
+                stats[it.attrToBoost].value += it.value
             }
         }
 

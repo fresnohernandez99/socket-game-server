@@ -72,14 +72,7 @@ class Hero(
             }
 
             if (move is AbstractBoost) {
-                if (move.value > 0) {
-                    if (lifePointsLose < move.value) lifePointsLose = 0
-                    else if (lifePointsLose > 0) lifePointsLose -= move.value
-                }
-
-                if (move.value < 0) {
-                    lifePointsLose += move.value
-                }
+                stats[move.attrToBoost].value += move.value
             }
         }
 
