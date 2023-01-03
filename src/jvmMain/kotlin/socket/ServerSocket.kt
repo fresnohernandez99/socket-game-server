@@ -1,6 +1,7 @@
 package socket
 
 import SocketEndpoint
+import engine.GameEngine
 import model.terrain.Terrain
 import model.terrain.space.DefeatCause
 import model.terrain.space.Space
@@ -8,7 +9,6 @@ import model.terrain.space.SpaceConfiguration
 import org.glassfish.tyrus.server.Server
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.net.Socket
 
 
 class ServerSocket {
@@ -18,14 +18,19 @@ class ServerSocket {
         // TODO load JSON configurations from file
 
         // init configurations
-        serverConfigurations = Terrain(
+        val serverConfigurations = Terrain(
             space = Space(
                 SpaceConfiguration(
-                    defeatCause = DefeatCause.SINGLE_PIECE_DEFEATED
+                    defeatCause = DefeatCause.SINGLE_PIECE_DEFEATED,
+                    maxPlayers = 2
                 )
             ),
             rules = ArrayList()
         )
+
+        // init default room engine
+        gameEngine = GameEngine()
+        gameEngine.initConfiguration(serverConfigurations)
 
         // start socket server
         try {
@@ -62,6 +67,6 @@ class ServerSocket {
     }
 
     companion object {
-        lateinit var serverConfigurations: Terrain
+        lateinit var gameEngine: GameEngine
     }
 }

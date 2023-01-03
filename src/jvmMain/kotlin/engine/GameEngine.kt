@@ -10,26 +10,21 @@ import model.player.AbstractPlayer
 import model.result.ActionToke
 import model.result.RoundResult
 import model.terrain.Terrain
-import model.terrain.rules.AbstractRule
 import model.terrain.space.DefeatCause
-import model.terrain.space.Space
-import model.terrain.space.SpaceConfiguration
 
 class GameEngine {
 
     private lateinit var terrain: Terrain
+    private var wasBattleInitialized = false
 
     /**
      * Iniciado por el servidor una única vez por tipo de juego.
      * Objeto global.
      */
     fun initConfiguration(
-        configuration: SpaceConfiguration,
-        initRules: ArrayList<AbstractRule> = ArrayList(),
+        terrain: Terrain
     ): GameEngine {
-        if (!this::terrain.isInitialized) terrain = Terrain(
-            space = Space(configuration), rules = initRules
-        )
+        if (!this::terrain.isInitialized) this.terrain = terrain
         return this
     }
 
@@ -38,8 +33,15 @@ class GameEngine {
      * Devuelve el formato de juego.
      * Usado para actualizar el estado inicial de los clientes.
      */
-    fun sendConfigurations(): Terrain {
+    fun getConfigurations(): Terrain {
         return terrain
+    }
+
+    fun addPlayers(playersList: ArrayList<AbstractPlayer>) {
+        if (!wasBattleInitialized)
+            this.terrain.apply {
+                this.playersList = playersList
+            }
     }
 
     /**
@@ -47,9 +49,9 @@ class GameEngine {
      * Receive all data from players
      * Se activa al tener todos los players listos. (SOCKET)
      */
-    fun initBattle(playersList: ArrayList<AbstractPlayer>): Terrain {
+    fun initBattle(): Terrain {
+        wasBattleInitialized = true
         return terrain.apply {
-            this.playersList = playersList
 
             if (this.space.configuration.generateRandomHands) {
                 this.playersList.forEach {
@@ -240,4 +242,10 @@ class GameEngine {
      */
 
     fun roundResult() {}
+
+    fun copy(): GameEngine {
+        return GameEngine().apply {
+            initConfiguration(this.terrain)
+        }
+    }
 }

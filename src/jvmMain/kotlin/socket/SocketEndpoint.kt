@@ -1,4 +1,5 @@
 import androidx.compose.runtime.mutableStateListOf
+import engine.GameEngine
 import model.player.HumanPlayer
 import socket.Constants.INTENT_ABANDON_ROOM
 import socket.Constants.INTENT_CLOSE_ROOM
@@ -183,7 +184,9 @@ class SocketEndpoint {
 
     companion object {
         val socketEndpoints = mutableStateListOf<SocketEndpoint>()
+
         val rooms = mutableStateListOf<Room>()
+        val roomTerrains: HashMap<String, GameEngine> = HashMap()
 
         val usersInfo: HashMap<String, HumanPlayer> = HashMap()
         val users: HashMap<String, String> = HashMap()

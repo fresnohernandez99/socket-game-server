@@ -1,6 +1,6 @@
 package socket.model
 
-import model.terrain.space.SpaceConfiguration
+import engine.GameEngine
 
 class Room(
     val id: String,
@@ -8,6 +8,5 @@ class Room(
     val name: String,
     var code: String,
     var closed: Boolean = false,
-    var configuration: SpaceConfiguration,
     var users: ArrayList<String>? = null
 )

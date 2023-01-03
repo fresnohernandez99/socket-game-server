@@ -44,17 +44,19 @@ object SocketManager {
         val message = Message(Constants.INTENT_CREATE_ROOM)
         message.from = session.id
         message.to = session.id
-        message.content = Response(INTENT_CORRECT, null).toJson()
+        message.content = Response(INTENT_CORRECT, room).toJson()
         return message
     }
 
     fun closeRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
         val request = Gson().fromJson(msg.content, StartRoomRequest::class.java)
 
-        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && it.owner == request.hostId }
+        val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && it.owner == session.id }
 
         if (findingRoom != null) {
             findingRoom.closed = true
+
+            SocketEndpoint.roomTerrains[findingRoom.id] = ServerSocket.gameEngine.copy()
         }
 
         val message = Message(Constants.INTENT_CLOSE_ROOM)
@@ -96,7 +98,9 @@ object SocketManager {
             it.code = ""
 
             if (it.closed) listToSend.remove(it)
-            else if (it.configuration.maxPlayers == it.users!!.size) listToSend.remove(it)
+            else if (ServerSocket.gameEngine.getConfigurations().space.configuration.maxPlayers == it.users!!.size) listToSend.remove(
+                it
+            )
         }
 
         val message = Message(Constants.INTENT_GET_ROOMS)
@@ -113,7 +117,7 @@ object SocketManager {
             it.id == request.roomId &&
                     !(it.users!!.contains(session.id)) &&
                     it.code == request.code &&
-                    it.configuration.maxPlayers > it.users!!.size
+                    ServerSocket.gameEngine.getConfigurations().space.configuration.maxPlayers > it.users!!.size
         }
 
 
