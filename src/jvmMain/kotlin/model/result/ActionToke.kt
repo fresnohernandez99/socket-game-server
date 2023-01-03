@@ -15,7 +15,6 @@ class ActionToke(
     // region PLAYER_TARGET
     val playerTargetId: String? = null,
 
-    val playerTarget_Boost_Toke: AbstractBoost? = null,
     // endregion PLAYER_TARGET
 
     // region PIECE_TARGET
@@ -26,7 +25,6 @@ class ActionToke(
     val pieceIdTarget: String? = null,
 
     val move: AbstractMove? = null,
-    val pieceTarget_Boost_Toke: AbstractBoost? = null,
 
     val moveToDeck: String? = null,
     // endregion PIECE_TARGET
@@ -45,10 +43,8 @@ class ActionToke(
                 playerId = action.playerId,
                 actionType = action.actionType,
                 playerTargetId = action.playerTargetId,
-                playerTarget_Boost_Toke = action.playerTarget_Boost_Toke,
                 pieceIdTarget = action.pieceTargetId,
                 move = action.move,
-                pieceTarget_Boost_Toke = action.pieceTarget_Boost_Toke,
                 piece = action.piece,
                 deckAction = action.deckAction,
                 pieceEmitterId = action.pieceEmitterId,

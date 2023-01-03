@@ -1,16 +1,11 @@
 package model.hero
 
 import model.action.Action
-import model.hero.armor.AbstractArmor
 import model.hero.classes.AbstractClass
-import model.hero.move.AttackMove
-import model.hero.move.DefenseMove
-import model.hero.move.HealMove
-import model.hero.move.InstantHealMode
-import model.hero.move.boosts.AbstractBoost
+import model.hero.equipment.AbstractEquipment
+import model.hero.move.*
+import model.hero.move.AbstractBoost
 import model.hero.stat.AbstractStat
-import model.hero.stat.Defense
-import model.hero.stat.Evasion
 import model.result.ActionToke
 import model.terrain.AbstractPiece
 
@@ -22,7 +17,7 @@ class Hero(
     var lifePointsLose: Int,
     val level: Int,
     val charClass: AbstractClass,
-    var boosts: ArrayList<AbstractBoost>,
+    var moves: ArrayList<AbstractMove> = ArrayList(),
 
     /**
      * Stats order in array:
@@ -34,7 +29,7 @@ class Hero(
      * 5- Strength
      */
     var stats: ArrayList<AbstractStat>,
-    var armor: ArrayList<AbstractArmor>
+    var equipment: ArrayList<AbstractEquipment> = ArrayList()
 ) : AbstractPiece() {
     override fun applyAction(action: Action): ActionToke {
         action.move?.let { move ->
@@ -42,14 +37,14 @@ class Hero(
             if (move is AttackMove) {
                 // calcular probabilidad de fallo
                 val r = Math.random() * 100
-                val isMiss = r <= (stats[2] as Evasion).value
+                val isMiss = r <= stats[2].value
 
                 var attackDamage = 0
                 if (!isMiss) {
                     // calcular danno final
                     attackDamage = move.damage - (
                             move.damage *
-                                    (stats[0] as Defense).value / 100
+                                    stats[0].value / 100
                             ).toInt()
                     // agregar danno tomado
                     lifePointsLose += attackDamage
@@ -62,7 +57,7 @@ class Hero(
 
             // Aplico un movimiento defensivo. Se define como mejorar el stat Defense
             if (move is DefenseMove) {
-                (stats[0] as Defense).value += move.percent
+                stats[0].value += move.percent
             }
 
             // Aplico un movimiento de curación instantáneo. Se devuelve a cero los puntos perdidos
@@ -74,6 +69,17 @@ class Hero(
             if (move is HealMove) {
                 if (lifePointsLose < move.restoredPoints) lifePointsLose = 0
                 else if (lifePointsLose > 0) lifePointsLose -= move.restoredPoints
+            }
+
+            if (move is AbstractBoost) {
+                if (move.value > 0) {
+                    if (lifePointsLose < move.value) lifePointsLose = 0
+                    else if (lifePointsLose > 0) lifePointsLose -= move.value
+                }
+
+                if (move.value < 0) {
+                    lifePointsLose += move.value
+                }
             }
         }
 

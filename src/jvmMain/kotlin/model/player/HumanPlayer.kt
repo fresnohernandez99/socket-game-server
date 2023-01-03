@@ -4,8 +4,7 @@ import model.action.Action
 import model.deck.GraveyardDeck
 import model.deck.HandDeck
 import model.deck.PieceDeck
-import model.hero.move.boosts.NegativeBoost
-import model.hero.move.boosts.PositiveBoost
+import model.hero.move.AbstractBoost
 import model.result.ActionToke
 
 class HumanPlayer(
@@ -18,14 +17,16 @@ class HumanPlayer(
     override val graveyardDeck: GraveyardDeck = GraveyardDeck()
 ) : AbstractPlayer() {
     override fun applyAction(action: Action): ActionToke {
-        action.playerTarget_Boost_Toke?.let {
-            if (it is PositiveBoost) {
-                if (lifePointsLose < it.value) lifePointsLose = 0
-                else if (lifePointsLose > 0) lifePointsLose -= it.value
-            }
+        action.move?.let {
+            if (it is AbstractBoost) {
+                if (it.value > 0) {
+                    if (lifePointsLose < it.value) lifePointsLose = 0
+                    else if (lifePointsLose > 0) lifePointsLose -= it.value
+                }
 
-            if (it is NegativeBoost) {
-                lifePointsLose += it.value
+                if (it.value < 0) {
+                    lifePointsLose += it.value
+                }
             }
         }
 
