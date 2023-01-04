@@ -1,8 +1,8 @@
 package model.hero.stat
 
-class AbstractStat(
-    val name: String,
-    var value: Float
+open class AbstractStat(
+    open val name: String,
+    open var value: Float
 ) {
     companion object {
         const val STAT_DEFENSE = "defense"

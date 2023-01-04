@@ -1,10 +1,10 @@
 package model.hero.equipment
 
-class AbstractEquipment(
-    val id: String,
-    val name: String,
-    val type: String,
-    val info: String
+open class AbstractEquipment(
+    open val id: String,
+    open val name: String,
+    open val type: String,
+    open val info: String
 ) {
     companion object {
         const val HEAD = "head"

@@ -13,7 +13,9 @@ import socket.model.request.StartRoomRequest
 import socket.model.request.UploadUserInfoRequest
 import socket.model.response.AbandonRoomResponse
 import socket.model.response.Response
+import util.JSON
 import javax.websocket.Session
+
 
 object SocketManager {
     fun connecting(socketEndpoint: SocketEndpoint, session: Session, username: String): Message {
@@ -160,9 +162,15 @@ object SocketManager {
     }
 
     fun uploadUserInfo(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-        val request = Gson().fromJson(msg.content, UploadUserInfoRequest::class.java)
 
-        SocketEndpoint.usersInfo[session.id] = request.playerInfo
+        try {
+            val request = JSON.gson.fromJson(msg.content, UploadUserInfoRequest::class.java)
+            SocketEndpoint.usersInfo[session.id] = request.playerInfo
+
+            println(JSON.gson.toJson(request.playerInfo.handDeck.items[0]))
+        } catch (e: Exception) {
+            println(e.message)
+        }
 
         val message = Message(Constants.INTENT_UPLOAD_INFO)
         message.from = session.id

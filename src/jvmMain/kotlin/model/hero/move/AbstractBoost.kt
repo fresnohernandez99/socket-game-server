@@ -6,4 +6,4 @@ open class AbstractBoost(
     override val id: String,
     val attrToBoost: Int,
     val value: Int,
-) : AbstractMove()
+) : AbstractMove(id)

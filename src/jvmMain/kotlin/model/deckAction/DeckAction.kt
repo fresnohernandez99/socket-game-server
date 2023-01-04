@@ -1,13 +1,12 @@
 package model.deckAction
 
-import model.deck.GraveyardDeck
-import model.deck.HandDeck
+import model.deck.AbstractDeck
 
 class DeckAction(
     val cardNumberToAffect: Int,
 
-    val deckTargetNameFromPop: String = HandDeck.DECK_NAME,
-    val deckTargetNameToPop: String = GraveyardDeck.DECK_NAME,
+    val deckTargetNameFromPop: String = AbstractDeck.HAND_DECK,
+    val deckTargetNameToPop: String = AbstractDeck.GRAVEYARD_DECK,
 
     val effectShuffle: Boolean = true
 )

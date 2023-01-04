@@ -2,9 +2,7 @@ package engine
 
 import model.action.Action
 import model.action.ActionType.*
-import model.deck.GraveyardDeck
-import model.deck.HandDeck
-import model.deck.PieceDeck
+import model.deck.AbstractDeck
 import model.hero.Hero
 import model.player.AbstractPlayer
 import model.result.ActionToke
@@ -91,7 +89,7 @@ class GameEngine {
                     actionsToke.add(
                         ActionToke(
                             actionType = PIECE_TARGET,
-                            moveToDeck = GraveyardDeck.DECK_NAME,
+                            moveToDeck = AbstractDeck.GRAVEYARD_DECK,
                             pieceIdTarget = piece.id,
                             playerId = piece.playerId
                         )
@@ -200,9 +198,9 @@ class GameEngine {
 
         if (action.moveToDeck != null) {
             val deckToMove = when (action.moveToDeck) {
-                PieceDeck.DECK_NAME -> playerTarget?.pieceDeck
-                HandDeck.DECK_NAME -> playerTarget?.handDeck
-                GraveyardDeck.DECK_NAME -> playerTarget?.graveyardDeck
+                AbstractDeck.PIECE_DECK -> playerTarget?.pieceDeck
+                AbstractDeck.HAND_DECK -> playerTarget?.handDeck
+                AbstractDeck.GRAVEYARD_DECK -> playerTarget?.graveyardDeck
                 else -> playerTarget?.handDeck
             }
 

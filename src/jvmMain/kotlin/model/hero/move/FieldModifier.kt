@@ -2,6 +2,6 @@ package model.hero.move
 
 class FieldModifier(
     override val id: String,
-) : AbstractMove() {
+) : AbstractMove(id) {
     fun effect(field: Any?) {} //todo change ** any ** for Field Type
 }

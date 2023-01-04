@@ -1,6 +1,6 @@
 package model.hero.classes
 
-abstract class AbstractClass {
-    abstract val name: String
-    abstract val poweredStats: ArrayList<String>
-}
+open class AbstractClass(
+    open val name: String,
+    open val poweredStats: ArrayList<String>
+)

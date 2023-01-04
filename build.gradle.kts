@@ -12,6 +12,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     google()
     mavenCentral()
+    maven ("https://artifactory.cronapp.io/public-release/")
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
@@ -32,6 +33,7 @@ kotlin {
                 api(compose.materialIconsExtended)
                 implementation("javax.websocket:javax.websocket-api:1.1")
                 implementation("com.google.code.gson:gson:2.10")
+                implementation("com.google.code.gson:gson-extras:2.8.5")
                 implementation("org.glassfish.tyrus:tyrus-server:1.1")
                 implementation("org.glassfish.tyrus:tyrus-container-grizzly:1.1")
             }

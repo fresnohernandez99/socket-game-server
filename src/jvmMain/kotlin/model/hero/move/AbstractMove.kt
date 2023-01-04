@@ -1,5 +1,5 @@
 package model.hero.move
 
-abstract class AbstractMove {
-    abstract val id: String
-}
+open class AbstractMove (
+    open val id: String
+)

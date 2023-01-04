@@ -1,9 +1,7 @@
 package model.player
 
 import model.action.Action
-import model.deck.GraveyardDeck
-import model.deck.HandDeck
-import model.deck.PieceDeck
+import model.deck.AbstractDeck
 import model.hero.move.AbstractBoost
 import model.hero.stat.AbstractStat
 import model.result.ActionToke
@@ -14,9 +12,9 @@ class HumanPlayer(
     override val lifePoints: Int = 0,
     override var lifePointsLose: Int = 0,
     var stats: ArrayList<AbstractStat> = ArrayList(),
-    override val pieceDeck: PieceDeck = PieceDeck(),
-    override val handDeck: HandDeck = HandDeck(),
-    override val graveyardDeck: GraveyardDeck = GraveyardDeck()
+    override var pieceDeck: AbstractDeck = AbstractDeck(),
+    override var handDeck: AbstractDeck = AbstractDeck(),
+    override var graveyardDeck: AbstractDeck = AbstractDeck()
 ) : AbstractPlayer() {
     override fun applyAction(action: Action): ActionToke {
         action.move?.let {
@@ -42,9 +40,9 @@ class HumanPlayer(
     }
 
     private fun getDeckByName(name: String) = when (name) {
-        PieceDeck.DECK_NAME -> pieceDeck
-        HandDeck.DECK_NAME -> handDeck
-        GraveyardDeck.DECK_NAME -> graveyardDeck
+        AbstractDeck.PIECE_DECK -> pieceDeck
+        AbstractDeck.HAND_DECK -> handDeck
+        AbstractDeck.GRAVEYARD_DECK -> graveyardDeck
         else -> handDeck
     }
 

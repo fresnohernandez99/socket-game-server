@@ -1,8 +1,8 @@
 package model.item
 
-abstract class AbstractItem {
-    abstract val id: String
-    abstract val name: String
+open class AbstractItem (
+    open val id: String,
+    open val name: String
 
     //abstract fun boost(): AbstractBoost
-}
+)

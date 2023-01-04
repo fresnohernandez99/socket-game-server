@@ -4,5 +4,5 @@ class DefenseMove(
     override val id: String,
     var percent: Int,
     val specific: Boolean,
-    val specificType: ArrayList<String>
-) : AbstractMove()
+    val specificType: ArrayList<String> = ArrayList()
+) : AbstractMove(id)

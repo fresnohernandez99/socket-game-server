@@ -4,6 +4,6 @@ open class AttackMove(
     override val id: String,
     val damage: Int,
     val type: ArrayList<String>
-) : AbstractMove() {
+) : AbstractMove(id) {
     open fun effect(target: Any?) {}
 }

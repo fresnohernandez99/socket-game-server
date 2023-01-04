@@ -10,9 +10,11 @@ import model.result.ActionToke
 import model.terrain.AbstractPiece
 
 class Hero(
-    override val id: String,
+    override var id: String,
     override var playerId: String,
-    override var position: Int? = null,
+    override var position: Int?,
+    override var type: String,
+    val name: String,
     val lifePoints: Int,
     var lifePointsLose: Int,
     val level: Int,
@@ -37,11 +39,11 @@ class Hero(
             if (move is AttackMove) {
                 // calcular probabilidad de fallo
                 val r = Math.random() * 100
-                val isMiss = r <= stats[2].value
+                val isMiss = r <= stats[1].value
 
                 var attackDamage = 0
                 if (!isMiss) {
-                    // calcular danno final
+                    // calcular danno final restando el porciento q recibe la defensa del heroe
                     attackDamage = move.damage - (
                             move.damage *
                                     stats[0].value / 100

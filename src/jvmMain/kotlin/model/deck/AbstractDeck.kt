@@ -2,10 +2,10 @@ package model.deck
 
 import model.terrain.AbstractPiece
 
-abstract class AbstractDeck {
-    abstract val name: String
+open class AbstractDeck(
+    open val name: String = "",
     open val items: ArrayList<AbstractPiece> = ArrayList()
-
+) {
     fun setNewItems(itemsForDeck: ArrayList<AbstractPiece>): ArrayList<AbstractPiece> {
         clearDeck()
         items.addAll(itemsForDeck)
@@ -59,4 +59,10 @@ abstract class AbstractDeck {
     }
 
     fun amount() = items.size
+
+    companion object {
+        const val HAND_DECK = "hand-deck"
+        const val GRAVEYARD_DECK = "graveyard-deck"
+        const val PIECE_DECK = "piece-deck"
+    }
 }
