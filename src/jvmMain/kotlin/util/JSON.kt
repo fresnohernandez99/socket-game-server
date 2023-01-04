@@ -4,6 +4,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
 import model.hero.Hero
 import model.play.*
+import model.player.AbstractPlayer
+import model.player.HumanPlayer
 import model.terrain.AbstractPiece
 
 object JSON {
@@ -19,9 +21,14 @@ object JSON {
         .registerSubtype(OverPiecePlay::class.java, OverPiecePlay.PLAY_NAME)
         .registerSubtype(SetInFieldPlay::class.java, SetInFieldPlay.PLAY_NAME)
 
+    private val runtimeTypeAdapterFactoryForPlayers = RuntimeTypeAdapterFactory
+        .of(AbstractPlayer::class.java, "type")
+        .registerSubtype(HumanPlayer::class.java, HumanPlayer.PLAYER_NAME)
+
     val gson = GsonBuilder()
         .registerTypeAdapterFactory(runtimeTypeAdapterFactoryForPieces)
         .registerTypeAdapterFactory(runtimeTypeAdapterFactoryForPlays)
+        .registerTypeAdapterFactory(runtimeTypeAdapterFactoryForPlayers)
         .enableComplexMapKeySerialization()
         .create()
 }

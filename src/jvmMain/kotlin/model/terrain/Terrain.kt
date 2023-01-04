@@ -7,9 +7,9 @@ import model.terrain.space.Space
 
 class Terrain(
     val space: Space,
-    var rules: ArrayList<AbstractRule>,
-    var playersList: ArrayList<AbstractPlayer> = ArrayList(),
-    var loserPlayers: ArrayList<AbstractPlayer> = ArrayList(),
+    var rules: List<AbstractRule>,
+    var playersList: List<AbstractPlayer> = ArrayList(),
+    var loserPlayers: List<AbstractPlayer> = ArrayList(),
     val spaceGrid: SpaceGrid = SpaceGrid()
 ) {
     fun copy() = Terrain(space, rules)

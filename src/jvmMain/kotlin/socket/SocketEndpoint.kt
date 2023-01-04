@@ -5,9 +5,11 @@ import socket.Constants.INTENT_ABANDON_ROOM
 import socket.Constants.INTENT_CLOSE_ROOM
 import socket.Constants.INTENT_CONNECTING
 import socket.Constants.INTENT_CREATE_ROOM
+import socket.Constants.INTENT_GET_CONFIGURATIONS
 import socket.Constants.INTENT_GET_ROOMS
 import socket.Constants.INTENT_JOIN_ROOM
 import socket.Constants.INTENT_RE_CONNECTING
+import socket.Constants.INTENT_UPDATE_CONFIGURATIONS
 import socket.Constants.INTENT_UPLOAD_INFO
 import socket.Constants.INTENT_USERS_INFO
 import socket.Constants.INTENT_WITH_ERROR
@@ -86,6 +88,16 @@ class SocketEndpoint {
 
             INTENT_UPLOAD_INFO -> {
                 val response = SocketManager.uploadUserInfo(this, session, message)
+                autoSend(response)
+            }
+
+            INTENT_GET_CONFIGURATIONS -> {
+                val response = SocketManager.getConfigurations(this, session, message)
+                autoSend(response)
+            }
+
+            INTENT_UPDATE_CONFIGURATIONS -> {
+                val response = SocketManager.updateConfigurations(this, session, message)
                 autoSend(response)
             }
         }

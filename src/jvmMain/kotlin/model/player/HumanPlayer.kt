@@ -46,4 +46,7 @@ class HumanPlayer(
         else -> handDeck
     }
 
+    companion object {
+        const val PLAYER_NAME = "human"
+    }
 }

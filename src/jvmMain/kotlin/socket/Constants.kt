@@ -16,4 +16,6 @@ object Constants {
     const val INTENT_JOIN_ROOM = "7"
     const val INTENT_USERS_INFO = "8"
     const val INTENT_UPLOAD_INFO = "9"
+    const val INTENT_GET_CONFIGURATIONS = "10"
+    const val INTENT_UPDATE_CONFIGURATIONS = "11"
 }

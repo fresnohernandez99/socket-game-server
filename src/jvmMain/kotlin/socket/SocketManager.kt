@@ -1,18 +1,21 @@
 package socket
 
 import SocketEndpoint
-import com.google.gson.Gson
+import engine.GameEngine
 import model.player.HumanPlayer
+import model.terrain.Terrain
+import model.terrain.space.DefeatCause
+import model.terrain.space.Space
+import model.terrain.space.SpaceConfiguration
 import socket.Constants.INTENT_CORRECT
 import socket.Constants.INTENT_WITH_ERROR
 import socket.model.Message
 import socket.model.Room
-import socket.model.request.GetUsersInfoRequest
-import socket.model.request.JoinRoomRequest
-import socket.model.request.StartRoomRequest
-import socket.model.request.UploadUserInfoRequest
+import socket.model.RoomWithConfigs
+import socket.model.request.*
 import socket.model.response.AbandonRoomResponse
 import socket.model.response.Response
+import socket.model.response.RoomsWithConfigResponse
 import util.JSON
 import javax.websocket.Session
 
@@ -36,12 +39,30 @@ object SocketManager {
         val room = JSON.gson.fromJson(msg.content, Room::class.java)
         room.owner = session.id
         room.users = ArrayList()
-        room.users?.add(session.id)
+        room.users.add(session.id)
 
         val exists = SocketEndpoint.rooms.find { it.id == room.id }
         if (exists != null) SocketEndpoint.rooms.remove(exists)
 
         SocketEndpoint.rooms.add(room)
+
+        // init configurations
+        val serverConfigurations = Terrain(
+            space = Space(
+                SpaceConfiguration(
+                    defeatCause = DefeatCause.SINGLE_PIECE_DEFEATED,
+                    maxPlayers = 2
+                )
+            ),
+            rules = ArrayList()
+        )
+
+        // init default room engine
+        val gameEngine = GameEngine()
+        gameEngine.initConfiguration(serverConfigurations)
+
+
+        SocketEndpoint.roomTerrains[room.id] = gameEngine
 
         val message = Message(Constants.INTENT_CREATE_ROOM)
         message.from = session.id
@@ -58,7 +79,16 @@ object SocketManager {
         if (findingRoom != null) {
             findingRoom.closed = true
 
-            SocketEndpoint.roomTerrains[findingRoom.id] = ServerSocket.gameEngine.copy()
+            val players = ArrayList<HumanPlayer>()
+            findingRoom.users.forEach {
+                players.add(
+                    SocketEndpoint.usersInfo[it]!!
+                )
+            }
+
+            SocketEndpoint.roomTerrains[findingRoom.id]!!.addPlayers(players)
+
+            println("AAAAA" + JSON.gson.toJson(SocketEndpoint.roomTerrains[findingRoom.id]))
         }
 
         val message = Message(Constants.INTENT_CLOSE_ROOM)
@@ -81,7 +111,7 @@ object SocketManager {
                 SocketEndpoint.rooms.removeAt(findingRoomIndex)
                 SocketEndpoint.roomTerrains.remove(request.roomId)
             } else {
-                SocketEndpoint.rooms[findingRoomIndex].users!!.removeAll { it == session.id }
+                SocketEndpoint.rooms[findingRoomIndex].users.removeAll { it == session.id }
             }
         }
 
@@ -93,23 +123,24 @@ object SocketManager {
     }
 
     fun getRooms(socketEndpoint: SocketEndpoint, session: Session): Message {
-        val listToSend = ArrayList<Room>()
+        val response = RoomsWithConfigResponse()
 
-        listToSend.addAll(SocketEndpoint.rooms.toList())
-
-        listToSend.forEach {
-            it.code = ""
-
-            if (it.closed) listToSend.remove(it)
-            else if (ServerSocket.gameEngine.getConfigurations().maxPlayers == it.users!!.size) listToSend.remove(
-                it
-            )
+        SocketEndpoint.rooms.forEach {
+            val configs = SocketEndpoint.roomTerrains[it.id]!!.getConfigurations()
+            if (configs.maxPlayers > it.users.size) {
+                response.rooms.add(
+                    RoomWithConfigs(
+                        it,
+                        configs
+                    )
+                )
+            }
         }
 
         val message = Message(Constants.INTENT_GET_ROOMS)
         message.from = session.id
         message.to = session.id
-        message.content = Response(INTENT_CORRECT, listToSend.toList()).toJson()
+        message.content = Response(INTENT_CORRECT, response).toJson()
         return message
     }
 
@@ -118,16 +149,16 @@ object SocketManager {
 
         val findingRoom = SocketEndpoint.rooms.find {
             it.id == request.roomId &&
-                    !(it.users!!.contains(session.id)) &&
+                    !(it.users.contains(session.id)) &&
                     it.code == request.code &&
-                    ServerSocket.gameEngine.getConfigurations().maxPlayers > it.users!!.size
+                    SocketEndpoint.roomTerrains[it.id]!!.getConfigurations().maxPlayers > it.users.size
         }
 
 
         val message = Message(Constants.INTENT_JOIN_ROOM)
 
         if (findingRoom != null) {
-            findingRoom.users!!.add(session.id)
+            findingRoom.users.add(session.id)
             message.from = session.id
             message.roomId = findingRoom.id
             message.content = Response(INTENT_CORRECT, findingRoom).toJson()
@@ -149,9 +180,7 @@ object SocketManager {
             val i = SocketEndpoint.usersInfo[it]
 
             if (i != null)
-                usersData.add(
-                    i
-                )
+                usersData.add(i)
         }
 
         val message = Message(Constants.INTENT_USERS_INFO)
@@ -174,8 +203,39 @@ object SocketManager {
         return message
     }
 
-    //TODO
-    fun updateRoomConfig() {}
+    fun getConfigurations(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+        val request = JSON.gson.fromJson(msg.content, GetConfigurationsRequest::class.java)
+
+        val message = Message(Constants.INTENT_GET_CONFIGURATIONS)
+        message.from = session.id
+        message.to = session.id
+        message.content =
+            Response(INTENT_CORRECT, SocketEndpoint.roomTerrains[request.roomId]!!.getConfigurations()).toJson()
+
+        return message
+    }
+
+    fun updateConfigurations(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+        val request = JSON.gson.fromJson(msg.content, UpdateConfigurationsRequest::class.java)
+        val room = SocketEndpoint.rooms.find { it.id == request.roomId }
+
+        val message = Message(Constants.INTENT_UPDATE_CONFIGURATIONS)
+        message.from = session.id
+
+        if (room != null && room.owner == session.id) {
+            SocketEndpoint.roomTerrains[room.id]!!.setConfigurations(request.spaceConfiguration)
+            message.roomId = room.id
+
+            message.content =
+                Response(INTENT_CORRECT, SocketEndpoint.roomTerrains[room.id]!!.getConfigurations()).toJson()
+        } else {
+            message.to = session.id
+
+            message.content =
+                Response(INTENT_WITH_ERROR, null).toJson()
+        }
 
 
+        return message
+    }
 }

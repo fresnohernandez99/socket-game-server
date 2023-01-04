@@ -5,18 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ba6f51a-c39e-4ce6-b42f-1ef53d344bf1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/AbstractPlay.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/MovePieceFromSpacePlay.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/MovePieceInDecksPlay.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/OverPiecePlay.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/SetInFieldPlay.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/RoomWithConfigs.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/request/GetConfigurationsRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/request/UpdateConfigurationsRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/response/RoomsWithConfigResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/AbstractDeck.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/deck/AbstractDeck.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/grid/SpaceGrid.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/grid/SpaceGrid.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/Terrain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/Terrain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/Constants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/ServerSocket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/ServerSocket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/Room.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/Room.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/util/JSON.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/util/JSON.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,11 +96,11 @@
       <recent name="model.deck" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="model.play" />
-      <recent name="model.hero.move" />
+      <recent name="socket.model" />
       <recent name="socket.model.response" />
       <recent name="socket.model.request" />
-      <recent name="socket.coder" />
+      <recent name="model.play" />
+      <recent name="model.hero.move" />
     </key>
   </component>
   <component name="RunManager">

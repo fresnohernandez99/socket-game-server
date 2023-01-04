@@ -1,16 +1,12 @@
 package engine
 
-import model.action.Action
-import model.action.ActionType.*
 import model.deck.AbstractDeck
 import model.hero.Hero
+import model.hero.classes.AbstractClass
 import model.hero.move.AttackMove
 import model.play.*
 import model.player.AbstractPlayer
-import model.result.ActionToke
-import model.result.RoundResult
 import model.terrain.Terrain
-import model.terrain.space.DefeatCause
 import model.terrain.space.SpaceConfiguration
 
 class GameEngine {
@@ -21,7 +17,7 @@ class GameEngine {
     fun initConfiguration(
         terrain: Terrain
     ): GameEngine {
-        if (!this::terrain.isInitialized) this.terrain = terrain
+        this.terrain = terrain
         return this
     }
 
@@ -29,7 +25,11 @@ class GameEngine {
         return terrain.space.configuration
     }
 
-    fun addPlayers(playersList: ArrayList<AbstractPlayer>) {
+    fun setConfigurations(configs: SpaceConfiguration) {
+        terrain.space.configuration = configs
+    }
+
+    fun addPlayers(playersList: List<AbstractPlayer>) {
         if (!wasBattleInitialized)
             this.terrain.apply {
                 this.playersList = playersList
@@ -60,7 +60,27 @@ class GameEngine {
                 is OverPiecePlay -> playsResult.add(overPiecePLay(it))
             }
         }
-
+        calculateActionsResult(
+            listOf(
+                SetInFieldPlay(
+                    playerId = "",
+                    piece = Hero(
+                        "",
+                        "",
+                        "",
+                        type = "hero",
+                        "",
+                        1,
+                        1,
+                        1,
+                        AbstractClass("", arrayListOf("")),
+                        stats = ArrayList()
+                    ),
+                    type = "",
+                    newPosition = ""
+                )
+            )
+        )
         return playsResult
     }
 

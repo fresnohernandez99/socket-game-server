@@ -17,21 +17,6 @@ class ServerSocket {
     suspend fun initServer() {
         // TODO load JSON configurations from file
 
-        // init configurations
-        val serverConfigurations = Terrain(
-            space = Space(
-                SpaceConfiguration(
-                    defeatCause = DefeatCause.SINGLE_PIECE_DEFEATED,
-                    maxPlayers = 2
-                )
-            ),
-            rules = ArrayList()
-        )
-
-        // init default room engine
-        gameEngine = GameEngine()
-        gameEngine.initConfiguration(serverConfigurations)
-
         // start socket server
         try {
             socket.start()
@@ -66,7 +51,4 @@ class ServerSocket {
         SocketEndpoint.users.clear()
     }
 
-    companion object {
-        lateinit var gameEngine: GameEngine
-    }
 }

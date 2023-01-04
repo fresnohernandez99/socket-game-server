@@ -8,5 +8,5 @@ class Room(
     val name: String,
     var code: String,
     var closed: Boolean = false,
-    var users: ArrayList<String>? = null
+    var users: ArrayList<String> = ArrayList()
 )
