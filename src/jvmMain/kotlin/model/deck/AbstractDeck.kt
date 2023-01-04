@@ -25,9 +25,14 @@ open class AbstractDeck(
         return items
     }
 
-    fun removeItem(position: Int): ArrayList<AbstractPiece> {
+    fun removeItemAt(position: Int) {
         if (position < items.size) items.removeAt(position)
-        return items
+    }
+
+    fun removeItem(pieceId: String): AbstractPiece? {
+        val piece = items.find { it.id == pieceId }
+        items.remove(piece)
+        return piece
     }
 
     fun getDeck() = items

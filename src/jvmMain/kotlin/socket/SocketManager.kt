@@ -33,7 +33,7 @@ object SocketManager {
     }
 
     fun createRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-        val room = Gson().fromJson(msg.content, Room::class.java)
+        val room = JSON.gson.fromJson(msg.content, Room::class.java)
         room.owner = session.id
         room.users = ArrayList()
         room.users?.add(session.id)
@@ -51,7 +51,7 @@ object SocketManager {
     }
 
     fun closeRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-        val request = Gson().fromJson(msg.content, StartRoomRequest::class.java)
+        val request = JSON.gson.fromJson(msg.content, StartRoomRequest::class.java)
 
         val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && it.owner == session.id }
 
@@ -69,7 +69,7 @@ object SocketManager {
     }
 
     fun abandonRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-        val request = Gson().fromJson(msg.content, StartRoomRequest::class.java)
+        val request = JSON.gson.fromJson(msg.content, StartRoomRequest::class.java)
 
         val findingRoomIndex = SocketEndpoint.rooms.indexOfFirst { it.id == request.roomId }
 
@@ -79,6 +79,7 @@ object SocketManager {
             roomId = SocketEndpoint.rooms[findingRoomIndex].id
             if (SocketEndpoint.rooms[findingRoomIndex].owner == session.id) {
                 SocketEndpoint.rooms.removeAt(findingRoomIndex)
+                SocketEndpoint.roomTerrains.remove(request.roomId)
             } else {
                 SocketEndpoint.rooms[findingRoomIndex].users!!.removeAll { it == session.id }
             }
@@ -100,7 +101,7 @@ object SocketManager {
             it.code = ""
 
             if (it.closed) listToSend.remove(it)
-            else if (ServerSocket.gameEngine.getConfigurations().space.configuration.maxPlayers == it.users!!.size) listToSend.remove(
+            else if (ServerSocket.gameEngine.getConfigurations().maxPlayers == it.users!!.size) listToSend.remove(
                 it
             )
         }
@@ -113,13 +114,13 @@ object SocketManager {
     }
 
     fun joinRoom(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-        val request = Gson().fromJson(msg.content, JoinRoomRequest::class.java)
+        val request = JSON.gson.fromJson(msg.content, JoinRoomRequest::class.java)
 
         val findingRoom = SocketEndpoint.rooms.find {
             it.id == request.roomId &&
                     !(it.users!!.contains(session.id)) &&
                     it.code == request.code &&
-                    ServerSocket.gameEngine.getConfigurations().space.configuration.maxPlayers > it.users!!.size
+                    ServerSocket.gameEngine.getConfigurations().maxPlayers > it.users!!.size
         }
 
 
@@ -140,7 +141,7 @@ object SocketManager {
     }
 
     fun getUsersInfo(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-        val request = Gson().fromJson(msg.content, GetUsersInfoRequest::class.java)
+        val request = JSON.gson.fromJson(msg.content, GetUsersInfoRequest::class.java)
 
         val usersData = ArrayList<HumanPlayer>()
 
@@ -162,15 +163,8 @@ object SocketManager {
     }
 
     fun uploadUserInfo(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
-
-        try {
-            val request = JSON.gson.fromJson(msg.content, UploadUserInfoRequest::class.java)
-            SocketEndpoint.usersInfo[session.id] = request.playerInfo
-
-            println(JSON.gson.toJson(request.playerInfo.handDeck.items[0]))
-        } catch (e: Exception) {
-            println(e.message)
-        }
+        val request = JSON.gson.fromJson(msg.content, UploadUserInfoRequest::class.java)
+        SocketEndpoint.usersInfo[session.id] = request.playerInfo
 
         val message = Message(Constants.INTENT_UPLOAD_INFO)
         message.from = session.id

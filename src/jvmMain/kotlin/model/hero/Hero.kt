@@ -12,7 +12,7 @@ import model.terrain.AbstractPiece
 class Hero(
     override var id: String,
     override var playerId: String,
-    override var position: Int?,
+    override var position: String? = null,
     override var type: String,
     val name: String,
     val lifePoints: Int,
@@ -82,5 +82,9 @@ class Hero(
         return ActionToke.fromAction(action).apply {
             wasMiss = false
         }
+    }
+
+    companion object {
+        const val PIECE_NAME = "hero"
     }
 }

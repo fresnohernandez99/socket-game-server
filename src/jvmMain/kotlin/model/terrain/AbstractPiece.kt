@@ -6,7 +6,7 @@ import model.result.ActionToke
 abstract class AbstractPiece{
     abstract val id: String
     abstract var playerId: String
-    abstract var position: Int?
+    abstract var position: String?
     abstract var type: String
     abstract fun applyAction(action: Action): ActionToke
 }
