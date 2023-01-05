@@ -4,7 +4,7 @@ import model.hero.move.AbstractMove
 
 class OverPiecePlay(
     override val playerId: String,
-    override val type: String = PLAY_NAME,
+    override var type: String,
     val positionFrom: String,
     val positionTo: String,
     val move: AbstractMove,

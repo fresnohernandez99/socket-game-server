@@ -12,6 +12,11 @@ abstract class AbstractPlayer {
     abstract var pieceDeck: AbstractDeck
     abstract var handDeck: AbstractDeck
     abstract var graveyardDeck: AbstractDeck
+    abstract var type: String
 
     abstract fun applyAction(action: Action): ActionToke
+
+    companion object {
+        const val PLAYER_NAME = "abstract-player"
+    }
 }

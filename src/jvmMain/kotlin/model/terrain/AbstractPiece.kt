@@ -9,4 +9,8 @@ abstract class AbstractPiece{
     abstract var position: String?
     abstract var type: String
     abstract fun applyAction(action: Action): ActionToke
+
+    companion object {
+        const val PIECE_NAME = "abstract-name"
+    }
 }

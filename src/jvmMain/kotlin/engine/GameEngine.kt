@@ -2,17 +2,19 @@ package engine
 
 import model.deck.AbstractDeck
 import model.hero.Hero
-import model.hero.classes.AbstractClass
 import model.hero.move.AttackMove
 import model.play.*
 import model.player.AbstractPlayer
 import model.terrain.Terrain
 import model.terrain.space.SpaceConfiguration
+import util.JSON
 
 class GameEngine {
 
     private lateinit var terrain: Terrain
     private var wasBattleInitialized = false
+    private var actualPlaysList = ArrayList<AbstractPlay>()
+    private var playBy: Int = 0
 
     fun initConfiguration(
         terrain: Terrain
@@ -36,6 +38,29 @@ class GameEngine {
             }
     }
 
+    fun addPlays(list: List<AbstractPlay>): Int {
+        actualPlaysList.addAll(list)
+        playBy++
+        return playBy
+    }
+
+    fun getPlaysForCalculate(): List<AbstractPlay> {
+        return actualPlaysList
+    }
+
+    fun cleanPlays() {
+        actualPlaysList = ArrayList()
+        playBy = 0
+    }
+
+    fun getPlayers(): List<AbstractPlayer> {
+        return terrain.playersList
+    }
+
+    fun getPlayerCount(): Int {
+        return getPlayers().size
+    }
+
     fun copy(): GameEngine {
         return GameEngine().apply {
             initConfiguration(this.terrain)
@@ -50,9 +75,10 @@ class GameEngine {
      * ##################################################
      */
 
-    fun calculateActionsResult(playArray: List<AbstractPlay>): ArrayList<AbstractPlay> {
+    fun calculateActionsResult(playArray: List<AbstractPlay>): List<AbstractPlay> {
         val playsResult = ArrayList<AbstractPlay>()
         playArray.forEach {
+            JSON.setPlayType(it)
             when (it) {
                 is SetInFieldPlay -> playsResult.add(setInField(it))
                 is MovePieceInDecksPlay -> playsResult.add(movePieceFromInDecksPlay(it))
@@ -60,31 +86,11 @@ class GameEngine {
                 is OverPiecePlay -> playsResult.add(overPiecePLay(it))
             }
         }
-        calculateActionsResult(
-            listOf(
-                SetInFieldPlay(
-                    playerId = "",
-                    piece = Hero(
-                        "",
-                        "",
-                        "",
-                        type = "hero",
-                        "",
-                        1,
-                        1,
-                        1,
-                        AbstractClass("", arrayListOf("")),
-                        stats = ArrayList()
-                    ),
-                    type = "",
-                    newPosition = ""
-                )
-            )
-        )
+
         return playsResult
     }
 
-    private fun setInField(play: SetInFieldPlay): AbstractPlay {
+    private fun setInField(play: SetInFieldPlay): SetInFieldPlay {
         // TODO CHECK FIELD SIZE
         // TODO CHECK LIMIT IN FIELD
 
@@ -94,6 +100,8 @@ class GameEngine {
         }
 
         // TODO CHECK NO ONE ON SETTING POSITION
+
+        JSON.setPieceType(play.piece)
 
         terrain.spaceGrid.grid[play.newPosition] = play.piece
 
@@ -161,4 +169,5 @@ class GameEngine {
 
         return play
     }
+
 }

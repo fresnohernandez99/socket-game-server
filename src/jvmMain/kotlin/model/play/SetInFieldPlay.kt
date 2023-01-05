@@ -4,7 +4,7 @@ import model.terrain.AbstractPiece
 
 class SetInFieldPlay(
     override val playerId: String,
-    override val type: String = PLAY_NAME,
+    override var type: String,
     val piece: AbstractPiece,
     val newPosition: String
 ) : AbstractPlay() {

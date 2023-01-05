@@ -9,6 +9,7 @@ import socket.Constants.INTENT_GET_CONFIGURATIONS
 import socket.Constants.INTENT_GET_ROOMS
 import socket.Constants.INTENT_JOIN_ROOM
 import socket.Constants.INTENT_RE_CONNECTING
+import socket.Constants.INTENT_SEND_PLAYS
 import socket.Constants.INTENT_UPDATE_CONFIGURATIONS
 import socket.Constants.INTENT_UPLOAD_INFO
 import socket.Constants.INTENT_USERS_INFO
@@ -99,6 +100,11 @@ class SocketEndpoint {
             INTENT_UPDATE_CONFIGURATIONS -> {
                 val response = SocketManager.updateConfigurations(this, session, message)
                 autoSend(response)
+            }
+
+            INTENT_SEND_PLAYS -> {
+                    val response = SocketManager.sendPlays(this, session, message)
+                    autoSend(response)
             }
         }
 

@@ -14,7 +14,8 @@ class HumanPlayer(
     var stats: ArrayList<AbstractStat> = ArrayList(),
     override var pieceDeck: AbstractDeck = AbstractDeck(),
     override var handDeck: AbstractDeck = AbstractDeck(),
-    override var graveyardDeck: AbstractDeck = AbstractDeck()
+    override var graveyardDeck: AbstractDeck = AbstractDeck(),
+    override var type: String
 ) : AbstractPlayer() {
     override fun applyAction(action: Action): ActionToke {
         action.move?.let {

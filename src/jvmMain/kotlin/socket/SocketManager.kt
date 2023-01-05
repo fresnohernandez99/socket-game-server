@@ -2,7 +2,7 @@ package socket
 
 import SocketEndpoint
 import engine.GameEngine
-import model.hero.Hero
+import model.play.AbstractPlay
 import model.player.HumanPlayer
 import model.terrain.Terrain
 import model.terrain.space.DefeatCause
@@ -17,6 +17,7 @@ import socket.model.request.*
 import socket.model.response.AbandonRoomResponse
 import socket.model.response.Response
 import socket.model.response.RoomsWithConfigResponse
+import socket.model.response.SendPlaysResponse
 import util.JSON
 import javax.websocket.Session
 
@@ -25,6 +26,7 @@ object SocketManager {
     fun connecting(socketEndpoint: SocketEndpoint, session: Session, username: String): Message {
         SocketEndpoint.socketEndpoints.add(socketEndpoint)
         SocketEndpoint.users[session.id] = username
+
         val message = Message(Constants.INTENT_CONNECTING)
         message.from = session.id
         message.to = session.id
@@ -62,7 +64,6 @@ object SocketManager {
         val gameEngine = GameEngine()
         gameEngine.initConfiguration(serverConfigurations)
 
-
         SocketEndpoint.roomTerrains[room.id] = gameEngine
 
         val message = Message(Constants.INTENT_CREATE_ROOM)
@@ -82,6 +83,9 @@ object SocketManager {
 
         val findingRoom = SocketEndpoint.rooms.find { it.id == request.roomId && it.owner == session.id }
 
+        val message = Message(Constants.INTENT_CLOSE_ROOM)
+        message.from = session.id
+
         if (findingRoom != null) {
             findingRoom.closed = true
 
@@ -93,12 +97,13 @@ object SocketManager {
             }
 
             SocketEndpoint.roomTerrains[findingRoom.id]!!.addPlayers(players)
+            message.roomId = request.roomId
+            message.content = Response(INTENT_CORRECT, null).toJson()
+        } else {
+            message.to = session.id
+            message.content = Response(INTENT_WITH_ERROR, null).toJson()
         }
 
-        val message = Message(Constants.INTENT_CLOSE_ROOM)
-        message.from = session.id
-        message.roomId = request.roomId
-        message.content = Response(INTENT_CORRECT, null).toJson()
         return message
     }
 
@@ -200,6 +205,9 @@ object SocketManager {
 
     fun uploadUserInfo(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
         val request = JSON.gson.fromJson(msg.content, UploadUserInfoRequest::class.java)
+
+        JSON.setPlayerType(request.playerInfo)
+
         SocketEndpoint.usersInfo[session.id] = request.playerInfo
 
         val message = Message(Constants.INTENT_UPLOAD_INFO)
@@ -243,6 +251,45 @@ object SocketManager {
         }
 
 
+        return message
+    }
+
+    fun sendPlays(socketEndpoint: SocketEndpoint, session: Session, msg: Message): Message {
+        val request = JSON.gson.fromJson(msg.content, SendPlaysRequest::class.java)
+
+        var message = Message(Constants.INTENT_SEND_PLAYS)
+        message.from = session.id
+
+        // Get plays
+        val engine = SocketEndpoint.roomTerrains[request.roomId]
+
+        if (engine != null) {
+            val total = engine.addPlays(request.plays)
+            // All players played
+            if (total == engine.getPlayerCount()) {
+                val playList = ArrayList<AbstractPlay>()
+                playList.addAll(engine.getPlaysForCalculate())
+
+                engine.cleanPlays()
+                // Calculate plays
+
+                val result = engine.calculateActionsResult(playList)
+
+                message = Message(Constants.INTENT_ROUND_RESULTS)
+                message.roomId = request.roomId
+                message.content = Response(INTENT_CORRECT, result).toJson()
+            }
+            // Waiting for more
+            else {
+                val response = SendPlaysResponse(session.id)
+
+                message.roomId = request.roomId
+                message.content = Response(INTENT_CORRECT, response).toJson()
+            }
+        } else {
+            message.to = session.id
+            message.content = Response(INTENT_WITH_ERROR, null).toJson()
+        }
         return message
     }
 }

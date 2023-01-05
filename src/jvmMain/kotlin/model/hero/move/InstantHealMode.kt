@@ -4,7 +4,7 @@ class InstantHealMode(
     override val id: String,
     val restoreLife: Boolean,
     val uses: Int,
-    override val type: String = MOVE_NAME
+    override var type: String
 ) : AbstractMove() {
     companion object {
         const val MOVE_NAME = "instant-heal"

@@ -5,20 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ba6f51a-c39e-4ce6-b42f-1ef53d344bf1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AbstractIntervalMove.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/BoostMove.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/FieldModifierMove.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/request/SendPlaysRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/response/RoundResultsResponse.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/model/response/SendPlaysResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/Hero.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AbstractBoost.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/engine/GameEngine.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AbstractIntervalMove.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AbstractIntervalMove.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AbstractMove.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AbstractMove.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AttackMove.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/AttackMove.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/BoostMove.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/BoostMove.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/DefenseMove.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/DefenseMove.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/FieldModifier.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/FieldModifierMove.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/FieldModifierMove.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/HealMove.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/HealMove.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHealMode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/InstantHealMode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/hero/move/IntervalHeal.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/AbstractPlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/AbstractPlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/MovePieceFromSpacePlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/MovePieceFromSpacePlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/MovePieceInDecksPlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/MovePieceInDecksPlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/OverPiecePlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/OverPiecePlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/SetInFieldPlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/play/SetInFieldPlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/AbstractPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/AbstractPlayer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/player/HumanPlayer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/model/terrain/AbstractPiece.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/Constants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketEndpoint.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/socket/SocketManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/util/JSON.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/util/JSON.kt" afterDir="false" />
     </list>
@@ -98,9 +107,9 @@
       <recent name="model.deck" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="socket.model" />
       <recent name="socket.model.response" />
       <recent name="socket.model.request" />
+      <recent name="socket.model" />
       <recent name="model.play" />
       <recent name="model.hero.move" />
     </key>

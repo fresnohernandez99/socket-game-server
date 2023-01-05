@@ -3,7 +3,7 @@ package model.hero.move
 class AbstractIntervalMove(
     override val id: String,
     val turns: Int,
-    override val type: String = MOVE_NAME
+    override var type: String
 ) : AbstractMove() {
     companion object {
         const val MOVE_NAME = "interval-heal"

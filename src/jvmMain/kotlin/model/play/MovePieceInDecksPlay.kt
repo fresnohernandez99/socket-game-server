@@ -4,7 +4,7 @@ import model.hero.move.AbstractMove
 
 class MovePieceInDecksPlay(
     override val playerId: String,
-    override val type: String = PLAY_NAME,
+    override var type: String,
     val moveFrom: String,
     val moveTo: String,
     val playerIdTarget: String,

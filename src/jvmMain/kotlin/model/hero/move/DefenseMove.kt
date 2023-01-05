@@ -5,7 +5,7 @@ class DefenseMove(
     var percent: Int,
     val specific: Boolean,
     val specificTypes: ArrayList<String> = ArrayList(),
-    override val type: String = MOVE_NAME
+    override var type: String
 ) : AbstractMove() {
     companion object {
         const val MOVE_NAME = "defense"

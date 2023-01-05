@@ -18,4 +18,6 @@ object Constants {
     const val INTENT_UPLOAD_INFO = "9"
     const val INTENT_GET_CONFIGURATIONS = "10"
     const val INTENT_UPDATE_CONFIGURATIONS = "11"
+    const val INTENT_SEND_PLAYS = "12"
+    const val INTENT_ROUND_RESULTS = "13"
 }

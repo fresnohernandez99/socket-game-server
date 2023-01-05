@@ -43,4 +43,34 @@ object JSON {
         .registerTypeAdapterFactory(runtimeTypeAdapterFactoryForMoves)
         .enableComplexMapKeySerialization()
         .create()
+
+    fun setPieceType(piece: AbstractPiece) {
+        val type = when (piece) {
+            is Hero -> Hero.PIECE_NAME
+            else -> AbstractPiece.PIECE_NAME
+        }
+
+        piece.type = type
+    }
+
+    fun setPlayType(play: AbstractPlay) {
+        val type = when (play) {
+            is MovePieceFromSpacePlay -> MovePieceFromSpacePlay.PLAY_NAME
+            is MovePieceInDecksPlay -> MovePieceInDecksPlay.PLAY_NAME
+            is OverPiecePlay -> OverPiecePlay.PLAY_NAME
+            is SetInFieldPlay -> SetInFieldPlay.PLAY_NAME
+            else -> AbstractPlay.PLAY_NAME
+        }
+
+        play.type = type
+    }
+
+    fun setPlayerType(player: AbstractPlayer) {
+        val type = when (player) {
+            is HumanPlayer -> HumanPlayer.PLAYER_NAME
+            else -> AbstractPlayer.PLAYER_NAME
+        }
+
+        player.type = type
+    }
 }
