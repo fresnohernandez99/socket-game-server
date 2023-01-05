@@ -4,7 +4,7 @@ import model.action.Action
 import model.hero.classes.AbstractClass
 import model.hero.equipment.AbstractEquipment
 import model.hero.move.*
-import model.hero.move.AbstractBoost
+import model.hero.move.BoostMove
 import model.hero.stat.AbstractStat
 import model.result.ActionToke
 import model.terrain.AbstractPiece
@@ -73,7 +73,7 @@ class Hero(
                 else if (lifePointsLose > 0) lifePointsLose -= move.restoredPoints
             }
 
-            if (move is AbstractBoost) {
+            if (move is BoostMove) {
                 stats[move.attrToBoost].value += move.value
             }
         }

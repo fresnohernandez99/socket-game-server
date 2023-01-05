@@ -2,6 +2,7 @@ package socket
 
 import SocketEndpoint
 import engine.GameEngine
+import model.hero.Hero
 import model.player.HumanPlayer
 import model.terrain.Terrain
 import model.terrain.space.DefeatCause
@@ -67,7 +68,12 @@ object SocketManager {
         val message = Message(Constants.INTENT_CREATE_ROOM)
         message.from = session.id
         message.to = session.id
-        message.content = Response(INTENT_CORRECT, room).toJson()
+        message.content = Response(
+            INTENT_CORRECT, RoomWithConfigs(
+                room,
+                SocketEndpoint.roomTerrains[room.id]!!.getConfigurations()
+            )
+        ).toJson()
         return message
     }
 
@@ -87,8 +93,6 @@ object SocketManager {
             }
 
             SocketEndpoint.roomTerrains[findingRoom.id]!!.addPlayers(players)
-
-            println("AAAAA" + JSON.gson.toJson(SocketEndpoint.roomTerrains[findingRoom.id]))
         }
 
         val message = Message(Constants.INTENT_CLOSE_ROOM)
@@ -161,7 +165,10 @@ object SocketManager {
             findingRoom.users.add(session.id)
             message.from = session.id
             message.roomId = findingRoom.id
-            message.content = Response(INTENT_CORRECT, findingRoom).toJson()
+            message.content = Response(
+                INTENT_CORRECT,
+                RoomWithConfigs(findingRoom, SocketEndpoint.roomTerrains[findingRoom.id]!!.getConfigurations())
+            ).toJson()
         } else {
             message.from = session.id
             message.to = session.id

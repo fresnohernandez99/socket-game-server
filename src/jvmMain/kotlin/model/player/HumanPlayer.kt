@@ -2,7 +2,7 @@ package model.player
 
 import model.action.Action
 import model.deck.AbstractDeck
-import model.hero.move.AbstractBoost
+import model.hero.move.BoostMove
 import model.hero.stat.AbstractStat
 import model.result.ActionToke
 
@@ -18,7 +18,7 @@ class HumanPlayer(
 ) : AbstractPlayer() {
     override fun applyAction(action: Action): ActionToke {
         action.move?.let {
-            if (it is AbstractBoost) {
+            if (it is BoostMove) {
                 stats[it.attrToBoost].value += it.value
             }
         }
