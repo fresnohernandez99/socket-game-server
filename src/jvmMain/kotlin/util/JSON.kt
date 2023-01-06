@@ -73,4 +73,19 @@ object JSON {
 
         player.type = type
     }
+
+    fun setMoveType(move: AbstractMove) {
+        val type = when (move) {
+            is BoostMove -> BoostMove.MOVE_NAME
+            is AttackMove -> AttackMove.MOVE_NAME
+            is DefenseMove -> DefenseMove.MOVE_NAME
+            is FieldModifierMove -> FieldModifierMove.MOVE_NAME
+            is HealMove -> HealMove.MOVE_NAME
+            is InstantHealMode -> InstantHealMode.MOVE_NAME
+            is AbstractIntervalMove -> AbstractIntervalMove.MOVE_NAME
+            else -> AbstractMove.MOVE_NAME
+        }
+
+        move.type = type
+    }
 }

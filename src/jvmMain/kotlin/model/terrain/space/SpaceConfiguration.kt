@@ -2,6 +2,7 @@ package model.terrain.space
 
 class SpaceConfiguration(
     var evaluateMiss: Boolean = false,
+    var evaluateSpeed: Boolean = false,
     var limitInField: Int = 1,
     var limitInHand: Int = -1,
     var limitInDeck: Int = -1,

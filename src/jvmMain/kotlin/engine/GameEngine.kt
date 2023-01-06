@@ -8,6 +8,8 @@ import model.player.AbstractPlayer
 import model.terrain.Terrain
 import model.terrain.space.SpaceConfiguration
 import util.JSON
+import java.util.*
+
 
 class GameEngine {
 
@@ -75,7 +77,34 @@ class GameEngine {
      * ##################################################
      */
 
-    fun calculateActionsResult(playArray: List<AbstractPlay>): List<AbstractPlay> {
+    fun calculateActionsResult(pA: List<AbstractPlay>): List<AbstractPlay> {
+        val playArray = ArrayList<AbstractPlay>()
+
+        val onBack = ArrayList<AbstractPlay>()
+        val auxList = ArrayList<AbstractPlay?>(Collections.nCopies(pA.size, null))
+
+        if (getConfigurations().evaluateSpeed) {
+            pA.forEach {
+                if (it is OverPiecePlay) {
+                    // TODO MEJORAR ALGORITMO
+                    val speed = (terrain.spaceGrid.grid[it.positionFrom] as Hero).stats[4].value.toInt()
+                    auxList.add(speed, it)
+                } else {
+                    onBack.add(it)
+                }
+            }
+
+            auxList.forEach {
+                if (it != null)
+                    playArray.add(it)
+            }
+
+            playArray.addAll(onBack)
+        } else {
+            playArray.addAll(pA)
+        }
+
+
         val playsResult = ArrayList<AbstractPlay>()
         playArray.forEach {
             JSON.setPlayType(it)
@@ -158,6 +187,8 @@ class GameEngine {
 
     private fun overPiecePLay(play: OverPiecePlay): OverPiecePlay {
         val piece = terrain.spaceGrid.grid[play.positionTo]
+
+        JSON.setMoveType(play.move)
 
         //Calculate miss probability
         if (play.move is AttackMove && piece is Hero && getConfigurations().evaluateMiss) {
