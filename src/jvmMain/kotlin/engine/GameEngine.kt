@@ -132,6 +132,7 @@ class GameEngine {
 
         JSON.setPieceType(play.piece)
 
+        play.piece.position = play.newPosition
         terrain.spaceGrid.grid[play.newPosition] = play.piece
 
         return play
